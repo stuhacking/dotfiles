@@ -1,0 +1,8 @@
+#! /bin/zsh
+
+# Set this to wherever you saved the dotfiles project.
+export ZSH_HOME=$HOME/dev/system/dotfiles
+
+# source all shell settings in dotfiles project.
+for config_file ($ZSH_HOME/**/*.zsh) source $config_file
+
