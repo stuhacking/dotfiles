@@ -2,6 +2,9 @@
 #
 # ZShell aliases
 
+alias reload-zsh='source ~/.zshrc'
+alias reload-x='sh /etc/X11/Xsession.d/45x11-custom-xrandr'
+
 # Directory listing
 if [[ $(uname) == "Darwin" ]]
 then
