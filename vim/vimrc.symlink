@@ -1,0 +1,37 @@
+" No need to be vi compatible
+set nocompatible
+
+" Enable filetype stuff
+filetype on
+filetype plugin on
+filetype indent on
+
+" Enable syntax by default
+syntax on
+
+set hidden
+set lazyredraw
+set showmode
+set wrapscan
+set shellslash
+
+" Use Visual Bell
+set vb
+
+" Status Line
+set stl=%f\ %m\ %r\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+
+" No menu/toolbar
+set guioptions=ac
+
+set history=100
+
+" Use incremental search
+set incsearch
+
+" Limit syntax coloring for long lines
+set synmaxcol=2048
+
+" Use Xoria256 Theme
+colorscheme xoria256
+
