@@ -19,14 +19,21 @@ set shellslash
 set vb
 
 " Status Line
-set stl=%f\ %m\ %r\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+set stl=%f\ %m\ %r\ %y\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+set laststatus=2
 
 " No menu/toolbar
 set guioptions=ac
 
+set gfn=Monaco:h13
+
 set history=100
 
-" Use incremental search
+" When changing, keep the original text and overwrite
+set cpoptions=$
+
+" Use incremental search and highlight
+set hlsearch
 set incsearch
 
 " Limit syntax coloring for long lines
