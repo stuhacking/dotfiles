@@ -28,12 +28,9 @@ set stl=%f\ %m\ %r\ %y\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
 
 set laststatus=2
 
-" Visual change-to
-set cpoptions=ces$
-
 " No menu/toolbar
 set guioptions=ac
-set gfn=Inconsolata\ Medium\ 14
+
 
 set history=100
 
@@ -48,7 +45,20 @@ set synmaxcol=2048
 set autoread
 
 if has("gui_running")
+    if has("mac") || has("macunix")
+        " Probably MacVim
+        set gfn=Monaco:h13
+    else
+        try
+            " Try to use the Inconsolata font but
+            " just fail silently.
+            set gfn=Inconsolata\ Medium\ 14
+        endtry
+    endif
     " Use Xoria256 Theme
     colorscheme xoria256
+else
+    let xterm16_colormap='soft'
+    colorscheme xterm16
 endif
 
