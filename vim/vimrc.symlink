@@ -15,23 +15,40 @@ set showmode
 set wrapscan
 set shellslash
 
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
 " Use Visual Bell
 set vb
 
 " Status Line
-set stl=%f\ %m\ %r\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+set stl=%f\ %m\ %r\ %y\ Line:\ %l/%L[%p%%]\ Col:\ %c\ Buf:\ #%n\ [%b][0x%B]
+
+set laststatus=2
+
+" Visual change-to
+set cpoptions=ces$
 
 " No menu/toolbar
 set guioptions=ac
+set gfn=Inconsolata\ Medium\ 14
 
 set history=100
 
-" Use incremental search
+" Use incremental search and highlight results
+set hlsearch
 set incsearch
 
 " Limit syntax coloring for long lines
 set synmaxcol=2048
 
-" Use Xoria256 Theme
-colorscheme xoria256
+" Automatically reload files
+set autoread
+
+if has("gui_running")
+    " Use Xoria256 Theme
+    colorscheme xoria256
+endif
 
