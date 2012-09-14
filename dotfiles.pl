@@ -33,13 +33,12 @@ sub install () {
         $file =~ s:(.*)\.symlink:$1:;
 
         my $target = "$ENV{HOME}/.$file";
-	print STDOUT "$target\n";
 
         if (-e $target) {
             unless ($backup_all || $skip_all || $overwrite_all) {
-                print STDOUT "File already exists: $target. [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? ";
+                print STDOUT "File already exists: $target.\n [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? ";
                 
-                switch (getc()) {
+                switch (getc(STDIN)) {
                     case "o"      { $overwrite = 1; }
                     case "O"      { $overwrite_all = 1; }
                     case "b"      { $backup = 1; }
@@ -50,7 +49,12 @@ sub install () {
             }
 
             `rm -fr $target` if $overwrite || $overwrite_all;
-            `mv "$ENV{HOME}/.$file" "$ENV{HOME}/.$file.backup"` if $backup || $backup_all;
+            `mv "$target" "$target.backup"` if $backup || $backup_all;
+
+            next if $skip || $skip_all;
+        } else
+        {
+            print STDERR "$target doesn't exist apparently.\n";
         }
 
         `ln -s "$ENV{PWD}/$symlink" "$target"`;
@@ -59,10 +63,12 @@ sub install () {
 
 sub uninstall () {
     print STDOUT "Uninstalling Dotfiles...\n";
+    print STDERR "TODO: Uninstaller\n";
 }
 
 sub usage () {
-    print STDERR "Usage: \n";
+    print STDERR "Usage: perl dotfiles.pl [un]install\n";
+    print STDERR "TODO: Uninstaller\n";
     exit 1;
 }
 
