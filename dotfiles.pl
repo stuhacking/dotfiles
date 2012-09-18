@@ -23,6 +23,7 @@ sub install () {
     print STDOUT "Installing Dotfiles...\n";
     my @symlinks = <*/**.symlink>;
 
+FILE_LOOP:
     foreach my $symlink (@symlinks) {
         my $overwrite = 0;
         my $backup = 0;
@@ -37,14 +38,20 @@ sub install () {
         if (-e $target) {
             unless ($backup_all || $skip_all || $overwrite_all) {
                 print STDOUT "File already exists: $target.\n [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all? ";
-                
-                switch (getc(STDIN)) {
+                my $line = <STDIN>;
+                chomp($line);
+
+                switch (substr($line,0,1)) {
                     case "o"      { $overwrite = 1; }
                     case "O"      { $overwrite_all = 1; }
                     case "b"      { $backup = 1; }
                     case "B"      { $backup_all = 1; }
-                    case "s"      { $skip = 1; }
+                    case "s"      { $skip = 1;}
                     case "S"      { $skip_all = 1; }
+                    else          { 
+                        print STDERR "Unknown Option! -- $line\n"; 
+                        redo FILE_LOOP;
+                    }
                 }            
             }
 
@@ -52,9 +59,6 @@ sub install () {
             `mv "$target" "$target.backup"` if $backup || $backup_all;
 
             next if $skip || $skip_all;
-        } else
-        {
-            print STDERR "$target doesn't exist apparently.\n";
         }
 
         `ln -s "$ENV{PWD}/$symlink" "$target"`;
