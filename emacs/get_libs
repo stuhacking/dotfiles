@@ -1,0 +1,12 @@
+SITE_LISP_PATH=$DOTFILES/emacs/emacs.d.symlink/site-lisp
+
+if [! -d $SITE_LISP_PATH]
+then
+    mkdir $SITE_LISP_PATH
+fi
+
+
+# Rainbow Delimiters
+wget -O $SITE_LISP_PATH/rainbow-delimiters.el http://github.com/jlr/rainbow-delimiters/raw/master/rainbow-delimiters.el 
+
+wget -O $SITE_LISP_PATH/rainbow-mode.el https://github.com/emacsmirror/rainbow-mode/blob/elpa/rainbow-mode.el

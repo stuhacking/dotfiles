@@ -7,8 +7,6 @@
 ;;; Code:
 (require 'cl)
 
-;; Setup System directories
-(setq allow-offensive-content-p nil)
 (setq emacs-dir (case system-type
                   ('windows-nt "/emacs-23.3/")
                   (t "/usr/local/share/emacs"))
@@ -21,16 +19,12 @@
 (let ((paths (list (concat my-emacsd "lisp/")
 		   (concat my-emacsd "lisp/danger/")
            (concat my-emacsd "site-lisp/")
-		   (concat my-emacsd "site-lisp/slime/"))))
+           (concat my-emacsd "site-lisp/slime/"))))
   (mapc #'(lambda (p) (add-to-list 'load-path p)) paths))
 
 ;; Load libraries
-(load-library "out-of-time")
-(load-library "groovy-mode")
 (load-library "window-state")           ; Zoom and restore windows in a frame.
 (load-library "wordcount")              ; Simple wordcount program.
-(when allow-offensive-content-p
-  (load-library "non-sequitur"))        ; Flame! Program
 
 ;; Load additional initialisations:
 (let ((init-dir (concat my-emacsd "init/"))
@@ -47,12 +41,6 @@
                                          (member system-type (second x))))
                        init-files)))
 
-(setq find-function-C-source-directory (concat emacs-dir "src/"))
-
-;;; Additional auto-modes
-(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
-(add-to-list 'auto-mode-alist '("\\.clj\\'" . clojure-mode))
-
 ;;; Various and sundry functions
 
 ;; Command: Describe Function at Point.
@@ -65,10 +53,6 @@
       (message "No function under cursor"))))
 ;; Bind to help key.
 (global-set-key [C-f1] #'describe-function-at-point)
-
-(and (= emacs-major-version 23)
-     (defun server-ensure-safe-dir (dir)
-       "Noop" t))
 
 ;; always use short y/n confirmations.
 (defalias 'yes-or-no-p 'y-or-n-p)

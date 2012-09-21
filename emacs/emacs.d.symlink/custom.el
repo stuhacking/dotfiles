@@ -4,9 +4,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(Info-mode-hook (quote (turn-on-font-lock)))
- '(aquamacs-additional-fontsets nil t)
- '(aquamacs-customization-version-id 215 t)
- '(aquamacs-tool-bar-user-customization nil t)
  '(auto-save-list-file-prefix "~/.emacs.d/asave/.saves-")
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backup/"))))
  '(c-require-final-newline (quote ((c-mode . t) (c++-mode . t) (objc-mode . t) (java-mode . t))))

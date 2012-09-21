@@ -1,0 +1,8 @@
+#! /bin/sh
+
+F_OUT=/tmp/xp.png
+
+xplanet -config day_night -output $F_OUT -num_times 1 -geometry 3520x1080 -lat 43 -lon -25 -radius 165 -center +1620+900
+
+DISPLAY=:0.0 hsetroot -fill $F_OUT
+
