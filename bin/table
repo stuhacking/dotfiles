@@ -1,62 +1,85 @@
 #! /usr/bin/env python
 # Table --- Turn ASCII tables into other types of
 # tables (e.g. html / wiki)
-# Created: 20-Sep-2012
-# Author: Stuart Hacking <stuhacking@gmail.com>
+# Created: 19-Sep-2012
 import sys
 import re
 
 #
-# HTML OUTPUT PROCEDURES
+# ABSTRACT FORMATTER
 #
-
-def html_row(line):
-    return "<tr>\n" + "".join(["<td>" + x + "</td>\n" for x in line]) + "<tr>\n"
-
-def convert_html(table_data):
-    table = ""
-    columns = None
-    for line in table_data:
-        print line
-        if line is not "separator":
-            if columns is None:
-                columns = line[:]
+# Define your own table formatting by extending and implementing
+# the row and header lines
+# TODO: Cell level formatting (e.g. bold/colored)
+# TODO: More types of table?
+# TODO: Header detection using, e.g. ==== instead of ------ in the input
+class Formatter:
+    def preamble(self):
+        return ""
+    def postamble(self):
+        return ""
+    def row(self, line):
+        return ""
+    def header(self, line):
+        return ""
+    def convert(self, table_data):
+        table = self.preamble()
+        columns = None
+        first = True
+        for line in table_data:
+            if line is not "separator":
+                if columns is None:
+                    columns = line[:]
+                else:
+                    for col in range(len(line)):
+                        columns[col] += " " + line[col]
             else:
-                for col in range(len(line)):
-                    columns[col] += " " + line[col]
-        else:
-            table += html_row(columns)
-            columns = None
-    return table
+                if first:
+                    table += self.header(columns)
+                else:
+                    table += self.row(columns)
+                columns = None
+                first = False
+        table += self.postamble()
+        return table
+    def __call__(self, table_data):
+        return self.convert(table_data)
 
 #
-# WIKI OUTPUT PROCEDURES
+# HTML FORMATTER
 #
+class html_table(Formatter):
 
-def wiki_row(line):
-    return "".join(["| " + x + " " for x in line]) + "|\n"
+    def preamble(self):
+        return "<table>\n"
+    def postamble(self):
+        return "</table>\n"
 
-def convert_wiki(table_data):
-    table = ""
-    columns = None
-    for line in table_data:
-        print line
-        if line is not "separator":
-            if columns is None:
-                columns = line[:]
-            else:
-                for col in range(len(line)):
-                    columns[col] += " " + line[col]
-        else:
-            table += wiki_row(columns)
-            columns = None
-    return table
+    def row(self, line):
+        return "<tr>\n" + "".join(["<td>" + x + "</td>\n" for x in line]) + "<tr>\n"
+
+    def header(self, line):
+        return "<thead><tr>\n" + "".join(["<th>" + x + "</th>\n" for x in line]) + "<tr></thead>\n"
+
+
+#
+# WIKI FORMATTER
+#
+# Confluence wiki syntax
+class wiki_table(Formatter):
+    def row(self, line):
+        return "".join(["| " + x + " " for x in line]) + "|\n"
+
+    def header(self, line):
+        return "".join(["|| " + x + " " for x in line]) + "||\n"
+
+
 
 # Hook up converters
 known_types = {
-    "html" : convert_html,
-    "htm" : convert_html,
-    "wiki" : convert_wiki
+    "html" : html_table,
+    "htm" : html_table,
+    "wiki" : wiki_table
 }
 
 # Very simply parse an ascii table into lines
@@ -120,12 +143,13 @@ def main():
 
         table_type = extension
 
-    print input_file
-    print output_file
-    print table_type
-    
-    output = known_types[table_type](parse(input_file))
-    print output
+    formatter = known_types[table_type]()
+    output = formatter(parse(input_file))
+    if output_file is None:
+        print output
+    else:
+        with open(output_file, "w") as out:
+            out.write(output)
 
 if __name__ == '__main__':
     main()
