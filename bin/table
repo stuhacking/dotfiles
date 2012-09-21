@@ -1,0 +1,131 @@
+#! /usr/bin/env python
+# Table --- Turn ASCII tables into other types of
+# tables (e.g. html / wiki)
+# Created: 20-Sep-2012
+# Author: Stuart Hacking <stuhacking@gmail.com>
+import sys
+import re
+
+#
+# HTML OUTPUT PROCEDURES
+#
+
+def html_row(line):
+    return "<tr>\n" + "".join(["<td>" + x + "</td>\n" for x in line]) + "<tr>\n"
+
+def convert_html(table_data):
+    table = ""
+    columns = None
+    for line in table_data:
+        print line
+        if line is not "separator":
+            if columns is None:
+                columns = line[:]
+            else:
+                for col in range(len(line)):
+                    columns[col] += " " + line[col]
+        else:
+            table += html_row(columns)
+            columns = None
+    return table
+
+#
+# WIKI OUTPUT PROCEDURES
+#
+
+def wiki_row(line):
+    return "".join(["| " + x + " " for x in line]) + "|\n"
+
+def convert_wiki(table_data):
+    table = ""
+    columns = None
+    for line in table_data:
+        print line
+        if line is not "separator":
+            if columns is None:
+                columns = line[:]
+            else:
+                for col in range(len(line)):
+                    columns[col] += " " + line[col]
+        else:
+            table += wiki_row(columns)
+            columns = None
+    return table
+
+# Hook up converters
+known_types = {
+    "html" : convert_html,
+    "htm" : convert_html,
+    "wiki" : convert_wiki
+}
+
+# Very simply parse an ascii table into lines
+def parse(input_file):
+    result = []
+    with open(input_file, "r") as f:
+        for line in f:
+            line_data = [x.strip(" ") for x in line[:-1].split("|") if x]
+            if len(line_data) is 1:
+                result.append("separator")
+            else:
+                result.append(line_data)
+    return result
+
+def usage():
+    print "usage: table [-o <output_filename>] [-t <output_type>] input_filename"
+    sys.exit(1)
+
+def main():
+    input_file = None    # None is not supported
+    output_file = None   # None will write to stdout
+    table_type = None    # None is not supported
+
+    args = sys.argv[1:]
+    
+    if (len(args) <= 0):
+        usage()
+        
+    while (len(args) > 0):
+        arg = args[0]
+        args = args[1:]
+        # Help Flag
+        if re.match('^--?h(elp)?$', arg):
+            usage()
+        # Output file flag
+        elif re.match('^--?o(utput)?$', arg):
+            output_file = args[0]
+            args = args[1:]
+        # Type Flag
+        elif re.match('^--?t(ype)?$', arg):
+            table_type = args[0]
+            args = args[1:]
+        # Finally, Input file flag
+        else:
+            input_file = arg
+
+    # Attempt to guess table type if None
+    if (table_type not in known_types):
+        if (table_type is not None):
+            print "Unsupported type: ", table_type
+            sys.exit(1)
+        
+        if (output_file is None):
+            print "Unable to guess output type for stdout."
+            sys.exit(1)
+
+        extension = output_file.split(".")[-1]
+        if (extension not in known_types):
+            print "Output type is not supported: ", extension
+            sys.exit(1)
+
+        table_type = extension
+
+    print input_file
+    print output_file
+    print table_type
+    
+    output = known_types[table_type](parse(input_file))
+    print output
+
+if __name__ == '__main__':
+    main()
