@@ -41,9 +41,9 @@ class Formatter:
     def postamble(self):
         return ""
     def row(self, line):
-        return ""
+        return " ".join(line) + '\n'
     def header(self, line):
-        return ""
+        return self.row(line)
 
     def decorate (self, text):
         output = re.sub(r'\/(.+)\/', self.decorators['italic'][0] + r'\1' + self.decorators['italic'][1], text)
