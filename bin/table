@@ -13,7 +13,29 @@ import re
 # TODO: Cell level formatting (e.g. bold/colored)
 # TODO: More types of table?
 # TODO: Header detection using, e.g. ==== instead of ------ in the input
+#
+# A Formatter is a class which parses a table_data structure of the form
+#  [ 'separator' | 'end' | [String] ]
+# and transforms it into an output format defined by subclassing the
+# abstract class.
+# 
+# Subclasses can override certain properties and methods to affect
+# the output:
+#  - self.decorators: specify text level formatting for bold/italic/underlined
+#                     text. Assumes standard notation in input, i.e. *bold*,
+#                     /italic/, _underline_
+#  - preamble: Adds any text which should precede the set of rows.
+#  - postamble: Adds any text which should succeed the set of rows.
+#  - row: Defines the structure of a row given the input type [String]
+#  - header: Defines the structure of a header row, if this differs from
+#            a standard row.
 class Formatter:
+    def __init__(self):
+        self.decorators = {
+            'bold' : ('', ''),
+            'italic' : ('', ''),
+            'underline' : ('', '')
+            }
     def preamble(self):
         return ""
     def postamble(self):
@@ -22,24 +44,35 @@ class Formatter:
         return ""
     def header(self, line):
         return ""
+
+    def decorate (self, text):
+        output = re.sub(r'\/(.+)\/', self.decorators['italic'][0] + r'\1' + self.decorators['italic'][1], text)
+        output = re.sub(r'\*(.+)\*', self.decorators['bold'][0] + r'\1' + self.decorators['bold'][1], output)
+        output = re.sub(r'\_(.+)\_', self.decorators['underline'][0] + r'\1' + self.decorators['underline'][1], output)
+        return output
+
     def convert(self, table_data):
         table = self.preamble()
         columns = None
         first = True
         for line in table_data:
-            if line is not "separator":
+            if line is "end":
+                break
+            elif line is not "separator":
                 if columns is None:
                     columns = line[:]
                 else:
                     for col in range(len(line)):
                         columns[col] += " " + line[col]
             else:
-                if first:
-                    table += self.header(columns)
-                else:
-                    table += self.row(columns)
-                columns = None
-                first = False
+                if columns is not None:
+                    row_data = [self.decorate(x) for x in columns]
+                    if first:
+                        table += self.header(row_data)
+                    else:
+                        table += self.row(row_data)
+                    columns = None
+                    first = False
         table += self.postamble()
         return table
     def __call__(self, table_data):
@@ -49,7 +82,12 @@ class Formatter:
 # HTML FORMATTER
 #
 class html_table(Formatter):
-
+    def __init__(self):
+        self.decorators = {
+            'bold' : ('<strong>', '</strong>'),
+            'italic' : ('<em>', '</em>'),
+            'underline' : ('<u>', '</u>')
+            }
     def preamble(self):
         return "<table>\n"
     def postamble(self):
@@ -62,11 +100,18 @@ class html_table(Formatter):
         return "<thead><tr>\n" + "".join(["<th>" + x + "</th>\n" for x in line]) + "<tr></thead>\n"
 
 
+
 #
 # WIKI FORMATTER
 #
 # Confluence wiki syntax
 class wiki_table(Formatter):
+    def __init__(self):
+        self.decorators = {
+            'bold' : ('*', '*'),
+            'italic' : ('_', '_'),
+            'underline' : ('+', '+')
+            }
     def row(self, line):
         return "".join(["| " + x + " " for x in line]) + "|\n"
 
@@ -82,18 +127,38 @@ known_types = {
     "wiki" : wiki_table
 }
 
-# Very simply parse an ascii table into lines
-def parse(input_file):
+# Parse a table represented by ASCII (e.g. an Emacs org-table).
+def parse_ascii(input_file):
     result = []
     with open(input_file, "r") as f:
         for line in f:
+            # Lines with content would contain '|' column separators
             line_data = [x.strip(" ") for x in line[:-1].split("|") if x]
-            if len(line_data) is 1:
+            detect_sep = "".join(line_data);
+            if len(line_data) == 0:
+                result.append("end")
+            elif detect_sep.count('-') > 0 or detect_sep.count('=') > 0:
                 result.append("separator")
             else:
                 result.append(line_data)
     return result
 
+# Parse a table represented by CSV data.
+# (Assumes first line is a header.)
+def parse_csv(input_file):
+    result = []
+    with open(input_file, "r") as f:
+        for line in f:
+            line_data = [x.strip(" ") for x in line[:-1].split(",") if x]
+            if len(line_data) == 0:
+                result.append("end")
+            else:
+                result.append(line_data)
+                result.append("separator")
+    print result
+    return result
+
+# Display Usage string and exit.
 def usage():
     print "usage: table [-o <output_filename>] [-t <output_type>] input_filename"
     sys.exit(1)
@@ -108,6 +173,13 @@ def main():
     if (len(args) <= 0):
         usage()
         
+    # Parse arguments - supported are:
+    #  -h --help : Display Usage string
+    #  -o --output : Specifiy output file (default, stdout)
+    #  -t --type   : Specify output format, e.g. html, wiki
+    #                If not specified, will attempt to guess from
+    #                output file extension
+    #  input_file  : final argument; source data file
     while (len(args) > 0):
         arg = args[0]
         args = args[1:]
@@ -126,7 +198,10 @@ def main():
         else:
             input_file = arg
 
-    # Attempt to guess table type if None
+    # Ensure that we know how to make the desired output
+    # a specified type will override guessing the type.
+    # We can't guess the type for stdout, so fail if table
+    # type is none and output is stdout.
     if (table_type not in known_types):
         if (table_type is not None):
             print "Unsupported type: ", table_type
@@ -142,9 +217,22 @@ def main():
             sys.exit(1)
 
         table_type = extension
+    
+    # Attempt to parse data from input file. If the extension
+    # of the input_file is .csv then import the table data using
+    # a csv parser. Otherwise use the ASCII parser.
+    table_data = ["end"] # empty table
+    input_type = input_file.split(".")[-1]
+    print input_type
+    if (input_type == "csv"):
+        table_data = parse_csv(input_file)
+    else:
+        table_data = parse(input_file)
 
+    # Perform the table conversion and write it to the
+    # output file.
     formatter = known_types[table_type]()
-    output = formatter(parse(input_file))
+    output = formatter(table_data)
     if output_file is None:
         print output
     else:
