@@ -50,15 +50,20 @@ if has("gui_running")
         set gfn=Monaco:h13
     else
         try
-            " Try to use the Inconsolata font but
-            " just fail silently.
-            set gfn=Inconsolata\ Medium\ 14
+            set gfn=DejaVu\ Sans\ Mono\ 12
         endtry
     endif
     " Use Xoria256 Theme
-    colorscheme xoria256
+    set background=dark
+    colorscheme wombat
 else
     let xterm16_colormap='soft'
     colorscheme xterm16
+endif
+
+" VimClojure options
+if has("vimclojure")
+    let vimclojure#HighlightBuiltins=1
+    let vimclojure#ParenRainbow=1
 endif
 
