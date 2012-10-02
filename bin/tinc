@@ -1,0 +1,231 @@
+#! /usr/bin/env python
+#
+# tinc -- There Is No Cabal
+# Utility for automatic management of .cabal files.
+#
+# Created: 02-Oct-2012
+#
+# This utility will take a number of options and add them to
+# a .cabal file using the command line. An output file may be
+# specified. If the output file is not specified then try to
+# detect if one exists in the current directory. Exit with
+# failure otherwise.
+#
+# Usage examples:
+# [1] tinc show author          => Prints author field
+# [2] tinc set  author "John"   => Sets author field to "John"
+# [3] tinc add-build-exe "game" => adds an executable section
+# [4] tinc add-build-exe "game" main-is Main.hs hs-source-dirs src
+#
+# TODO: Most support for editing cabal files -- in progress
+# TODO:  - Support for build sections
+# TODO:  - Sensible ordering of 'significant' flags
+# TODO:  - Detection of installed cabal version
+#
+import sys
+import os
+import re
+
+cabal_filename = None # Should be specified or detected.
+
+class Cabal_Section:
+    def __init__(self, stype, name):
+        self.stype = stype
+        self.name = name
+        self.fields = {}
+
+class Cabal_File:
+    """
+    A Cabal_File is a simple representation of the contents
+    of a .cabal file on disk. It can be read and written.
+    Writes will always overwrite the target file completely
+    (reorganising the sections per the command given).
+    """
+    def __init__(self, filename):
+        self.filename = filename
+        self.fields = {}
+        self.sections = []
+
+        # Ensure filename ends with .cabal
+        # Try not to require the user to be explicit.
+        if (not filename.endswith('.cabal')):
+            self.filename += '.cabal'
+
+    def read(self):
+        with open(self.filename, "r") as f:
+            for line in f:
+                data = [x.strip(' ') for x in line[:-1].split(':') if x]
+                if (len(data) >= 2):
+                    self.fields[data[0]] = data[1]
+
+    def write(self):
+        with open(self.filename + '_test', "w") as f:
+            f.write("name: " + self.filename.split('.cabal')[0] + '\n')
+            for key in self.fields.keys():
+                f.write(key + ": " + self.fields[key] + "\n")
+
+
+    def show(self, fieldname):
+        try:
+            print self.fields[fieldname]
+        except KeyError:
+            print >> sys.stderr, "No such field -- ", fieldname
+
+    def set_(self, fieldname, value):
+        self.fields[fieldname] = value
+
+# Attempt to use a cabal file from the cwd
+def guess_cabal_file():
+    files = os.listdir(os.getcwd())
+    for file in files:
+        if (file.endswith('.cabal')):
+            return file
+    return None
+
+# Ensure that cabal_filename has a value.
+# Fail if unable to find a reasonable guess.
+def ensure_cabal_filename():
+    global cabal_filename
+    if (cabal_filename is None):
+        cabal_filename = guess_cabal_file()
+
+    if (cabal_filename is None):
+        print "Unable to Determine Cabal file."
+        exit(1)
+
+# Display usage and exit with failure.
+def usage():
+    print "Usage: tinc <command> [options]"
+    print "options:"
+    print " -h --help    - Display this help message."
+    print " -o --output  - Specify output cabal file."
+    print "Use \"tinc <command> --help for command specific options"
+    exit(1)
+
+def usage_show():
+    print "Usage: tinc show [options] [field ...]"
+    print "options:"
+    print " -h --help    - Display this help message."
+    print " -o --output  - Specify output cabal file."
+    exit(1)
+
+def usage_set():
+    print "Usage: tinc set [options] [field value ...]"
+    print "options:"
+    print " -h --help    - Display this help message."
+    print " -o --output  - Specify output cabal file."
+    exit(1)
+
+def usage_create():
+    print "Usage: tinc create [options] [field value ...]"
+    print "options:"
+    print " -h --help    - Display this help message."
+    print " -o --output  - Specify output cabal file."
+    exit(1)
+
+# Commands that inspect the contents of an existing
+# cabal file.
+def show(args):
+    global cabal_filename
+    fieldnames = []
+
+    while (len(args) > 0):
+        arg, args = args[0], args[1:]
+
+        if re.match('^--?h(elp)?$', arg):
+            usage_show()
+
+        elif re.match('^--?o(utput)?$', arg):
+            cabal_filename, args = args[0], args[1:]
+
+        else:
+            fieldnames += [arg]
+
+    ensure_cabal_filename()
+
+    cabal_file = Cabal_File(cabal_filename)
+    cabal_file.read()
+
+    for field in fieldnames:
+        cabal_file.show(field)
+
+# Commands that update fields in a cabal file.
+def set_(args):
+    global cabal_filename
+    fields = []
+
+    while (len(args) > 0):
+        arg, args = args[0], args[1:]
+
+        if re.match('^--?h(elp)?$', arg):
+            usage_set()
+
+        elif re.match('^--?o(utput)?$', arg):
+            cabal_filename, args = args[0], args[1:]
+
+        else:
+            if (len(args) >= 1):
+                fields.append((arg, args[0]))
+                args = args[1:]
+
+
+    ensure_cabal_filename()
+    
+    cabal_file = Cabal_File(cabal_filename)
+    cabal_file.read()
+
+    for field in fields:
+        cabal_file.set_(field[0], field[1])
+
+    cabal_file.write()
+
+
+# Create a new cabal file.
+def create(args):
+    global cabal_filename
+
+    while (len(args) > 0):
+        arg, args = args[0], args[1:]
+
+        if re.match('^--?h(elp)?$', arg):
+            usage_create()
+
+def main():
+    global cabal_filename
+    args = sys.argv[1:]
+
+    if (len(args) <= 0):
+        usage()
+
+    while (len(args) > 0):
+        arg, args = args[0], args[1:]
+
+        # Help Flag
+        if re.match('^--?h(elp)?$', arg):
+            usage()
+
+        # Output File
+        elif re.match('^--?o(utput)?$', arg):
+            cabal_filename, args = args[0], args[1:]
+
+        else:
+            command = arg
+            break
+
+    if (command == 'show'):
+        show(args)
+    elif (command == 'set'):
+        set_(args)
+    elif (command == 'create'):
+        create(args)
+    else:
+        print "unknown command -- ", command
+        usage()
+
+# Script Entrypoint
+if __name__ == '__main__':
+    main()
+    sys.exit(0)
+
+# tinc ends here.
+
