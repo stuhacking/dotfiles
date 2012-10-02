@@ -19,3 +19,6 @@ alias lf='ls -F'
 alias lla='ls -la'
 alias llf='ls -lF'
 alias laf='ls -lFa'
+
+alias whereami='echo $HOSTNAME'
+
