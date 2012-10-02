@@ -138,10 +138,10 @@ class Cabal_File:
         global target_cabal_version
 
         if not self.fields.has_key('author'):
-            self.set_('author', username())
+            self.set('author', username())
 
         if not self.fields.has_key('cabal-version'):
-            self.set_('cabal-version', cabal_version_string(target_cabal_version))
+            self.set('cabal-version', cabal_version_string(target_cabal_version))
 
         with open(self.filename + '_test', "w") as f:
             f.write("name: " + self.filename.split('.cabal')[0] + '\n')
@@ -158,7 +158,7 @@ class Cabal_File:
         except KeyError:
             print >> sys.stderr, "No such field -- ", fieldname
 
-    def set_(self, fieldname, value):
+    def set(self, fieldname, value):
         """
         Add or overwrite the field with value.
         """
@@ -253,7 +253,7 @@ def set_(args):
     cabal_file.read()
 
     for field in fields:
-        cabal_file.set_(field[0], field[1])
+        cabal_file.set(field[0], field[1])
 
     cabal_file.write()
 
@@ -282,7 +282,7 @@ def create(args):
     cabal_file = Cabal_File(cabal_filename)
 
     for field in fields:
-        cabal_file.set_(field[0], field[1])
+        cabal_file.set(field[0], field[1])
 
     cabal_file.write()
 
