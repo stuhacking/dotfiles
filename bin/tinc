@@ -20,61 +20,59 @@
 # TODO: Most support for editing cabal files -- in progress
 # TODO:  - Support for build sections
 # TODO:  - Sensible ordering of 'significant' flags
-# TODO:  - Detection of installed cabal version
 #
 import sys
+import subprocess
 import os
 import re
 
-cabal_filename = None # Should be specified or detected.
+# Version of cabal file format we intend to output.
+target_cabal_version = [1, 2, 0]
 
-class Cabal_Section:
-    def __init__(self, stype, name):
-        self.stype = stype
-        self.name = name
-        self.fields = {}
+# Target cabal filename - should be specified or detected.
+cabal_filename = None
 
-class Cabal_File:
-    """
-    A Cabal_File is a simple representation of the contents
-    of a .cabal file on disk. It can be read and written.
-    Writes will always overwrite the target file completely
-    (reorganising the sections per the command given).
-    """
-    def __init__(self, filename):
-        self.filename = filename
-        self.fields = {}
-        self.sections = []
+### SYSTEM COMMANDS ###
 
-        # Ensure filename ends with .cabal
-        # Try not to require the user to be explicit.
-        if (not filename.endswith('.cabal')):
-            self.filename += '.cabal'
+# Return username of current user.
+def username():
+    return subprocess.check_output(["whoami"])
 
-    def read(self):
-        with open(self.filename, "r") as f:
-            for line in f:
-                data = [x.strip(' ') for x in line[:-1].split(':') if x]
-                if (len(data) >= 2):
-                    self.fields[data[0]] = data[1]
+# Return all or part of the installed cabal version
+# 'full'    - the full string, e.g. 1.12.3, 1.2.34.12
+# 'major'   - Just the major version, e.g. 1
+# 'minor'   - Just the minor version, e.g. 14
+# 'release' - Two part release version, e.g. 1.14
+# default = full
+def cabal_version_string(version, parts='full'):
+    if parts == "major":
+        return str(version[0])
+    elif parts == "minor":
+        return str(version[1])
+    elif parts == 'release':
+        return str(version[0]) + '.' + str(version[1])
+    else:
+        ver = ""
+        for part in version:
+            ver += str(part) + "."
+        return ver[:-1]
+    
+# Turn a text cabal version string into a version triplet.
+# Convert the parameter string, or return the installed
+# cabal version if no parameter is passed.
+def cabal_version(version_string=None):
+    if version_string is None:
+        cabal_version_string = subprocess.check_output(["cabal", "--version"]).split(' ')[4]
+    else:
+        cabal_version_string = version_string
+        if version_string.startswith('>='):
+            cabal_version_string = version_string[2:]
+    return [int(x) for x in cabal_version_string.split('.') if x]
 
-    def write(self):
-        with open(self.filename + '_test', "w") as f:
-            f.write("name: " + self.filename.split('.cabal')[0] + '\n')
-            for key in self.fields.keys():
-                f.write(key + ": " + self.fields[key] + "\n")
-
-
-    def show(self, fieldname):
-        try:
-            print self.fields[fieldname]
-        except KeyError:
-            print >> sys.stderr, "No such field -- ", fieldname
-
-    def set_(self, fieldname, value):
-        self.fields[fieldname] = value
-
-# Attempt to use a cabal file from the cwd
+# Attempt to find a cabal file in the current working
+# directory and return the filename.
+# (If multiple cabal files exist, return the first one
+# encountered.)
 def guess_cabal_file():
     files = os.listdir(os.getcwd())
     for file in files:
@@ -92,6 +90,86 @@ def ensure_cabal_filename():
     if (cabal_filename is None):
         print "Unable to Determine Cabal file."
         exit(1)
+
+### CABAL FILE STRUCTURES ###
+
+class Cabal_File:
+    """
+    A Cabal_File is a simple representation of the contents
+    of a .cabal file on disk. It can be read and written.
+    Writes will always overwrite the target file completely
+    (reorganising the sections per the command given).
+    """
+    class Cabal_Section:
+        """
+        Cabal File section, e.g. A build config section.
+        (Just a struct with named slots.)
+        """
+        def __init__(self, stype, name):
+            self.stype = stype
+            self.name = name
+            self.fields = {}
+            
+    def __init__(self, filename):
+        self.filename = filename
+        self.fields = {}
+        self.sections = []
+
+        # Ensure filename ends with .cabal
+        # Try not to require the user to be explicit.
+        if (not filename.endswith('.cabal')):
+            self.filename += '.cabal'
+
+    def read(self):
+        """
+        Read the contents of self.filename.
+        """
+        with open(self.filename, "r") as f:
+            for line in f:
+                data = [x.strip(' ') for x in line[:-1].split(':') if x]
+                if (len(data) >= 2):
+                    self.fields[data[0]] = data[1]
+            del self.fields['name']
+
+    def write(self):
+        """
+        Write the Cabal File to self.filename.
+        """
+        global target_cabal_version
+
+        if not self.fields.has_key('author'):
+            self.set_('author', username())
+
+        if not self.fields.has_key('cabal-version'):
+            self.set_('cabal-version', cabal_version_string(target_cabal_version))
+
+        with open(self.filename + '_test', "w") as f:
+            f.write("name: " + self.filename.split('.cabal')[0] + '\n')
+            for key in self.fields.keys():
+                f.write(key + ": " + self.fields[key] + "\n")
+
+    def show(self, fieldname):
+        """
+        Display the requested field, if present.
+        Otherwise, gracefully display an error.
+        """
+        try:
+            print self.fields[fieldname]
+        except KeyError:
+            print >> sys.stderr, "No such field -- ", fieldname
+
+    def set_(self, fieldname, value):
+        """
+        Add or overwrite the field with value.
+        """
+        # Release string is enough for cabal version.
+        if fieldname == 'cabal-version':
+            value = '>=' + cabal_version_string(cabal_version(value),
+                                                parts='release')
+
+        self.fields[fieldname] = value
+
+### USAGE AND ARGUMENT PARSING ###
 
 # Display usage and exit with failure.
 def usage():
@@ -183,12 +261,30 @@ def set_(args):
 # Create a new cabal file.
 def create(args):
     global cabal_filename
+    fields = []
 
     while (len(args) > 0):
         arg, args = args[0], args[1:]
 
         if re.match('^--?h(elp)?$', arg):
             usage_create()
+
+        elif re.match('^--?o(utput)?$', arg):
+            cabal_filename, args = args[0], args[1:]
+
+        else:
+            if (len(args) >= 1):
+                fields.append((arg, args[0]))
+                args = args[1:]
+
+    ensure_cabal_filename()
+
+    cabal_file = Cabal_File(cabal_filename)
+
+    for field in fields:
+        cabal_file.set_(field[0], field[1])
+
+    cabal_file.write()
 
 def main():
     global cabal_filename
