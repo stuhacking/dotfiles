@@ -8,12 +8,19 @@ txtrst='\e[0m'
 
 function make_prompt ()
 {
+    vc_status=""
+
+    if [ "x" != "x$GIT_CUSTOM_DIR" ]
+    then
+        vc_status=$(make_git_prompt)
+    fi
+
     if [ $? != 0 ]
     then
-        PS1="\[$txtred\]\#\[$txtrst\] \[$txtblu\]\W\[$txtrst\]\$ "
+        PS1="\[$txtred\]\#\[$txtrst\] \[$txtblu\]\W $vc_status\[$txtrst\]\$ "
         PS2="\[$txtred\]>\[$txtrst\] "
     else
-        PS1="\[$txtgrn\]\#\[$txtrst\] \[$txtblu\]\W\[$txtrst\]\$ "
+        PS1="\[$txtgrn\]\#\[$txtrst\] \[$txtblu\]\W $vc_status\[$txtrst\]\$ "
         PS2="\[$txtgrn\]>\[$txtrst\] "
     fi
 }
