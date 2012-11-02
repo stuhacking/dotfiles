@@ -1,0 +1,1 @@
+export GIT_CUSTOM_DIR=$DOTFILES/git
