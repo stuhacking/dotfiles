@@ -20,5 +20,8 @@ alias lla='ls -la'
 alias llf='ls -lF'
 alias laf='ls -lFa'
 
+alias grep='grep --color=auto -n'
+alias xgrep='xargs grep --color=auto -n'
+
 alias whereami='echo $HOSTNAME'
 
