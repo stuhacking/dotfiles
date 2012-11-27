@@ -31,3 +31,6 @@
     r = reset
     r1 = reset HEAD^
     rv = reset HEAD^ --hard
+
+    pso = "!git push origin $(git-current-branch)"
+    plo = "!git pull origin $(git-current-branch)"
