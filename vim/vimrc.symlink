@@ -44,6 +44,9 @@ set synmaxcol=2048
 " Automatically reload files
 set autoread
 
+set backupdir=~/tmp/vim/swp//,.,/tmp//
+set dir=~/tmp/vim/swp//,.,/tmp//
+
 if has("gui_running")
     if has("mac") || has("macunix")
         " Probably MacVim
