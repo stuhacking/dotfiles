@@ -1,11 +1,4 @@
 #
-# Linux
-#
-
-# Ignore "backup" files which vim and emacs commonly create
-*~
-
-#
 # OS X
 #
 
@@ -13,21 +6,14 @@
 # See: http://en.wikipedia.org/wiki/.DS_Store
 .DS_Store
 
-#
 # Emacs
-#
 
 # Ignore emacs temporary files
+*~
 \#*\#
 .\#*
-
-#
-# Vim
-#
-
-# Vim creates swapfiles for open files; ignore these
-.*.swp
-.*.swo
+*.elc
+*.eld
 
 # Specific sub directories to ignore
 emacs/emacs.d.symlink/site-lisp/*
@@ -35,4 +21,13 @@ emacs/emacs.d.symlink/.emacs-places
 emacs/emacs.d.symlink/.eshell/history
 emacs/emacs.d.symlink/.eshell/lastdir
 emacs/emacs.d.symlink/.recentf
-emacs/emacs.d.symlink/slime-history.eld
+
+# Vim
+
+# Vim creates swapfiles for open files; ignore these
+.*.swp
+.*.swo
+
+# Python
+*.pyc
+
