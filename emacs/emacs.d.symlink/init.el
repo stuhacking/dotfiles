@@ -35,6 +35,7 @@
       (init-files (list
                    '("init-kbd")
                    '("init-cl")
+                   '("init-org")
                    '("init-win" (windows-nt)))))
   (mapc #'(lambda (f) (load (concat init-dir (first f))))
         (remove-if-not #'(lambda (x) (or (null (second x))
