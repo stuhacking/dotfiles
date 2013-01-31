@@ -1,0 +1,3 @@
+#! /bin/sh
+gnome-terminal --window-with-profile=Nethack --geometry=80x25 -e nethack
+
