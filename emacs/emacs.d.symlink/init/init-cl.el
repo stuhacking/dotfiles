@@ -5,6 +5,7 @@
 (require 'slime)
 
 (setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-compile-file-options '(:fasl-directory "~/tmp/slime-fasl/"))
 
 ;;(eval-after-load "rainbow-delimiters"
 ;;  (setq-default frame-background-mode 'dark))
