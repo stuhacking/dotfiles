@@ -28,6 +28,7 @@ emacs/emacs.d.symlink/.recentf
 # Vim creates swapfiles for open files; ignore these
 .*.swp
 .*.swo
+.netrwhist
 
 # Python
 *.pyc
