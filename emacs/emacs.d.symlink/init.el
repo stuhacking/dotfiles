@@ -15,6 +15,9 @@
 (setq custom-file (concat my-emacsd "custom.el"))
 (load custom-file)
 
+(add-hook 'after-init-hook
+          #'(lambda () (load-theme 'solarized-light t)))
+
 ;; Include Additional Load Paths
 (let ((paths (list (concat my-emacsd "lisp/")
 		   (concat my-emacsd "lisp/danger/")

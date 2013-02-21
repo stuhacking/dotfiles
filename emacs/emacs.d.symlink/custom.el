@@ -1,13 +1,15 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Info-mode-hook (quote (turn-on-font-lock)))
  '(auto-save-list-file-prefix "~/.emacs.d/asave/.saves-")
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backup/"))))
  '(c-require-final-newline (quote ((c-mode . t) (c++-mode . t) (objc-mode . t) (java-mode . t))))
+ '(custom-enabled-themes (quote (solarized-light)))
  '(custom-file "~/.emacs.d/custom.el")
+ '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
  '(debug-on-error t)
  '(diary-file "~/.emacs.d/diary")
  '(display-time-day-and-date t)
@@ -24,13 +26,12 @@
  '(fortune-dir "~/.emacs.d/")
  '(fortune-file "~/.emacs.d/fortunes")
  '(fringe-mode (quote (nil . 0)) nil (fringe))
- '(global-hl-line-mode t)
+ '(global-hl-line-mode nil)
  '(help-mode-hook (quote (variable-pitch-mode)))
  '(indent-tabs-mode nil)
  '(indicate-buffer-boundaries (quote right))
  '(indicate-empty-lines t)
  '(inhibit-startup-screen t)
- '(initial-buffer-choice t)
  '(initial-major-mode (quote emacs-lisp-mode))
  '(initial-scratch-message "")
  '(lisp-indent-function (quote common-lisp-indent-function))
@@ -39,6 +40,9 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(nroff-mode-hook (quote (variable-pitch-mode)))
  '(ns-tool-bar-display-mode nil t)
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (C . t) (perl . t) (python . t) (haskell . t) (ruby . t) (js . t) (java . t) (sql . t) (gnuplot . t) (awk . t))))
+ '(org-src-tab-acts-natively t)
+ '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(recentf-max-saved-items 30)
  '(recentf-mode t)
  '(recentf-save-file "~/.emacs.d/.recentf")
@@ -64,10 +68,14 @@
  '(yow-file "~/.emacs.d/yow.lines"))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "Black" :foreground "gray95" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 106 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
- '(font-lock-string-face ((((class color) (min-colors 88) (background dark)) (:foreground "LightSalmon" :weight extra-bold))))
- '(hl-line ((t (:background "gray5")))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:height 110 :width normal :family "DejaVu Sans Mono"))))
+ '(org-block-background ((t (:background "#FFFFFF"))))
+ '(org-block-begin-line ((t (:background "#EAEAFF" :foreground "#008ED1" :box (:line-width 2 :color "grey75" :style released-button) :slant italic))) t)
+ '(org-block-end-line ((t (:inherit org-block-begin-line))) t)
+ '(org-level-1 ((t (:inherit outline-1))))
+ '(outline-1 ((t (:inherit font-lock-function-name-face :underline t :weight bold))))
+ '(outline-2 ((t (:inherit font-lock-variable-name-face :slant italic)))))

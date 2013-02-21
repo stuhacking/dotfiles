@@ -16,6 +16,7 @@
 *.eld
 
 # Specific sub directories to ignore
+emacs/emacs.d.symlink/elpa/*
 emacs/emacs.d.symlink/site-lisp/*
 emacs/emacs.d.symlink/.emacs-places
 emacs/emacs.d.symlink/.eshell/history
