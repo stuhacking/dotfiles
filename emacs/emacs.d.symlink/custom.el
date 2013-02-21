@@ -7,6 +7,7 @@
  '(auto-save-list-file-prefix "~/.emacs.d/asave/.saves-")
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backup/"))))
  '(c-require-final-newline (quote ((c-mode . t) (c++-mode . t) (objc-mode . t) (java-mode . t))))
+ '(column-number-mode t)
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-file "~/.emacs.d/custom.el")
  '(custom-safe-themes (quote ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" default)))
@@ -50,7 +51,8 @@
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/.emacs-places")
  '(scroll-bar-mode nil)
- '(show-paren-style (quote expression))
+ '(show-paren-mode t)
+ '(show-paren-style (quote mixed))
  '(size-indication-mode t)
  '(slime-complete-symbol-function (quote slime-fuzzy-complete-symbol))
  '(slime-repl-history-file "~/.emacs.d/slime-history.eld")
@@ -73,6 +75,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:height 110 :width normal :family "DejaVu Sans Mono"))))
+ '(mode-line-buffer-id ((t (:background "goldenrod" :weight bold))))
  '(org-block-background ((t (:background "#FFFFFF"))))
  '(org-block-begin-line ((t (:background "#EAEAFF" :foreground "#008ED1" :box (:line-width 2 :color "grey75" :style released-button) :slant italic))) t)
  '(org-block-end-line ((t (:inherit org-block-begin-line))) t)
