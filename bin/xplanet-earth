@@ -1,8 +1,18 @@
 #! /bin/sh
 
 F_OUT=/tmp/xp.png
+# wget -O /tmp/earthquakes http://www.wizabit.eclipse.co.uk/xplanet/files/local/quake
 
-xplanet -config day_night -output $F_OUT -num_times 1 -geometry 3520x1080 -lat 43 -lon -25 -radius 165 -center +1620+900
+# wget -O /home/shacking/.xplanet/satellite/iss http://www.wizabit.eclipse.co.uk/xplanet/files/local/iss
+# wget -O /home/shacking/.xplanet/satellite/iss.tle http://www.wizabit.eclipse.co.uk/xplanet/files/local/iss.tle
+
+# trim earthquake data
+grep "^[^#]" /tmp/earthquakes | head -n 25 > /tmp/eq-$$
+cat /tmp/eq-$$ > /tmp/earthquakes
+rm /tmp/eq-$$
+
+# xplanet -config day_night -projection mercator -output $F_OUT -num_times 1 -geometry 3520x1080 -lat 43 -lon -25 -radius 165 -center +1620+900
+xplanet -config day_night -projection rectangle -lon -30 -output $F_OUT -num_times 1 -geometry 3520x1080 -center +1620+900
 
 DISPLAY=:0.0 hsetroot -fill $F_OUT
 
