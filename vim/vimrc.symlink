@@ -1,3 +1,6 @@
+runtime bundle/pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
 " No need to be vi compatible
 set nocompatible
 
