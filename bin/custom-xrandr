@@ -4,7 +4,7 @@ xrandr | grep VGA1 | grep " connected "
 if [ $? -eq 0 ]; then
    # External monitor connected
    echo "Attempting to set dual mode..."
-   xrandr --output VGA1 --mode 1920x1080 --pos 1920x0 --output LVDS1 --mode 1600x900 --pos 0x0
+   xrandr --output LVDS1 --mode 1600x900 --pos 0x0 --output VGA1 --mode 1920x1080 --pos 1600x0
    if [ $? -ne 0 ]; then
       # Something went wrong, fallback to laptop display
       echo "Dual Mode failed."
