@@ -6,23 +6,23 @@
 
 ;;; Code:
 (require 'cl)
+(require 'package)
+(package-initialize)
 
 (setq emacs-dir (case system-type
                   ('windows-nt "/emacs-23.3/")
                   (t "/usr/local/share/emacs"))
       my-emacsd "~/.emacs.d/")
-      
+
+
 (setq custom-file (concat my-emacsd "custom.el"))
 (load custom-file)
 
-(add-hook 'after-init-hook
-          #'(lambda () (load-theme 'solarized-light t)))
-
 ;; Include Additional Load Paths
 (let ((paths (list (concat my-emacsd "lisp/")
-		   (concat my-emacsd "lisp/danger/")
-           (concat my-emacsd "site-lisp/")
-           (concat my-emacsd "site-lisp/slime/"))))
+                   (concat my-emacsd "lisp/danger/")
+                   (concat my-emacsd "site-lisp/")
+                   (concat my-emacsd "site-lisp/slime/"))))
   (mapc #'(lambda (p) (add-to-list 'load-path p)) paths))
 
 ;; Load libraries
