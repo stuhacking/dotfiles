@@ -8,11 +8,13 @@
 
 (setq slime-compile-file-options '(:fasl-directory "~/tmp/slime-fasl/"))
 
-;; hook rainbow mode into any lisp mode
+;; hook rainbow-delimiters mode into any lisp mode
 (dolist (hook '(lisp-mode-hook
                 slime-repl-mode-hook
                 emacs-lisp-mode-hook))
-  (add-hook hook 'rainbow-delimiters-mode))
+  (add-hook hook (lambda ()
+                   (require 'rainbow-delimiters)
+                   (rainbow-delimiters-mode))))
 
 ;; Slime Setup
 (eval-after-load "slime"
