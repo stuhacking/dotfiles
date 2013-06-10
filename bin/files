@@ -1,2 +1,8 @@
-find . -name "*.$1" -print
+#! /bin/sh
+
+if [ x = x$1 ]; then
+    find . -name "*" -print
+else
+    find . -name "*.$1" -print
+fi
 
