@@ -1,0 +1,115 @@
+; -*-lisp-*-
+;;;; StumpWM Configuration
+;;;; Mostly stolen
+(in-package :stumpwm)
+
+;;; Internal variable definitions.
+
+(defparameter *foreground-color* "darkcyan")
+(defparameter *background-color* "black")
+(defparameter *border-color* *foreground-color*)
+
+;;; Internal function definitions.
+
+;; Found at:
+;; http://en.wikipedia.org/wiki/User:Gwern/.stumpwmrc
+(defun cat (&rest strings) "A shortcut for (concatenate 'string foo bar)."
+  (apply 'concatenate 'string strings))
+
+;;; Theme.
+
+;; Window border colors.
+(set-focus-color *foreground-color*)
+(set-unfocus-color *background-color*)
+
+;; Input box colors.
+(set-fg-color *foreground-color*)
+(set-bg-color *background-color*)
+(set-border-color *border-color*)
+
+;; Modeline colors.
+(setf *mode-line-foreground-color* *foreground-color*)
+(setf *mode-line-background-color* *background-color*)
+(setf *mode-line-border-color* *border-color*)
+
+;;; Init stuff.
+
+;; Make frames and windows 1-indexed.
+;; See: http://lists.gnu.org/archive/html/stumpwm-devel/2006-08/msg00002.html
+;; Found at: http://en.wikipedia.org/wiki/User:Gwern/.stumpwmrc
+(setf *frame-number-map* "1234567890")
+(setf *window-number-map* "1234567890") ; This doesn't actually do anything.
+
+;; Rename the first group to Browse and create the other groups.
+;; Found at: http://en.wikipedia.org/wiki/User:Gwern/.stumpwmrc
+(setf (group-name (first (screen-groups (current-screen)))) "Home")
+
+;; Set up X cursor and colors.
+(run-shell-command (cat "xsetroot -cursor_name left_ptr -fg " *background-color* ; Cursor body
+                                                      " -bg " *border-color*)) ; Cursor outline
+
+;; Keep the X cursor out of the way.
+(run-shell-command "unclutter -idle 5 -jitter 5 -root")
+
+;; Configure and start the modeline. Colors are handled above.
+(setf *mode-line-border-width* 1)
+(setf *mode-line-pad-x* 5)
+(setf *mode-line-pad-y* 1)
+(setf *mode-line-position* :top)
+(setf *mode-line-timeout* 60) ; Update every 10 seconds if nothing else has triggered it already.
+(setf *screen-mode-line-format* (list "[%n %w] -- " ; Current group and frames
+                                      `(:eval (run-shell-command "date '+%h %e %H:%M'" t))))
+
+;; Switch mode-line on only if needed. Found at:
+;; http://hcl-club.lu/svn/development/lisp/.stumpwmrc
+(if (not (head-mode-line (current-head)))
+ (toggle-mode-line (current-screen) (current-head)))
+
+;; Found this tidbit browsing the source. Defaults to :ignore
+(setf *mouse-focus-policy* :click) ; I'm fucking lame.
+
+;;; Keyboard shortcuts.
+
+;; Fluxbox-style Alt-F# virtual desktop (group in StumpWM-speak) switching. Modified from:
+;; http://hcl-club.lu/svn/development/lisp/.stumpwmrc
+(dotimes (i 13)
+  (unless (eq i 0) ; F0 is non-existant and will error.
+    (define-key *top-map* (kbd (format nil "M-F~a" i)) (format nil "gselect ~a" i))))
+
+(defvar *term-colors* (list "red" "orange" "blue" "purple" "green"))
+
+(defun rand-nth (list)
+    (nth (random (length list)) list))
+
+;; Applications.
+(define-key *root-map* (kbd "b") "exec google-chrome ")
+(define-key *root-map* (kbd "e") "exec emacs ")
+(define-key *root-map* (kbd "c") "exec aterm ")
+(define-key *root-map* (kbd "l") "exec xscreensaver-command --lock ")
+
+;; Swank Server
+;;; to start swank
+;;; Probably running sbcl on Linux with quicklisp.
+;;; Use a custom port for the stumpwm server to
+;;; avoid interfering with other lisp processes.
+(ql:quickload 'swank)
+(let ((server-running nil)
+      (stumpwm-swank-port 99811))
+ (defcommand swank () ()
+  "Toggle the swank server on/off"
+  (setf stumpwm:*top-level-error-action* :break)
+  (if server-running
+   (progn
+    (swank:stop-server stumpwm-swank-port)
+    (echo-string
+     (current-screen)
+     "Stopping swank.")
+    (setf server-running nil))
+   (progn
+    (swank:create-server :port stumpwm-swank-port
+                         :style swank:*communication-style*
+                         :dont-close t)
+    (echo-string
+     (current-screen)
+     "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm).")
+    (setf server-running t)))))
