@@ -1,0 +1,95 @@
+#! /usr/bin/env perl
+# This script will print a java log with colourized stack traces.
+# Colors can be specified in the rules file, default ~/.jless
+# Format 'match str:color specifier'
+#
+require 5;
+use strict;
+use warnings;
+use Term::ANSIColor;
+
+my $verbose = 0;
+my $rule_file = $ENV{HOME} . '/.cless';
+
+my %rules = ();
+
+sub parse_rules ()
+{
+    if (-e $rule_file)
+    {
+        open(RULES, '<', $rule_file) or die "Cannot open $rule_file.\n";
+        while (<RULES>)
+        {
+            next if (length($_) <= 1 or index($_, '#') == 0);
+
+            my @kv = split(':',$_);
+            $rules{$kv[0]} = $kv[1];
+        }
+    }
+}
+
+sub print_color_log ($)
+{
+    my ($file) = @_;
+
+    open(LOG, '<', $file);
+    while (<LOG>)
+    {
+        my $color = 'reset';
+        while (my ($key, $value) = each(%rules))
+        {
+            #$color = $value if (-1 != index($_, $key));
+            $color = $value if ($_ =~ m/$key/);
+        }
+
+        print STDOUT color $color;
+        print STDOUT $_;
+        print STDOUT color 'reset';
+    }
+}
+
+sub print_color_stdin ()
+{
+    while (<STDIN>)
+    {
+        my $color = 'reset';
+        while (my ($key, $value) = each(%rules))
+        {
+            #$color = $value if (-1 != index($_, $key));
+            $color = $value if ($_ =~ m/$key/);
+        }
+
+        print STDOUT color $color;
+        print STDOUT $_;
+        print STDOUT color 'reset';
+    }
+}
+sub main() {
+
+    my @log_files = ();
+
+    while ($#ARGV >= 0)
+    {
+        $_ = shift @ARGV;
+        if (m/^--?verbose$/)     { $verbose++; }
+        elsif (m/^-v+$/)         { $verbose += length($_)-1; }
+        elsif (m/^--?r(ules)?$/) { $rule_file = shift @ARGV; }
+        else { push @log_files, $_; }
+    }
+
+    parse_rules;
+    if (@log_files)
+    {
+        foreach (@log_files)
+        {
+            print_color_log ($_);
+        }
+    }
+    else
+    {
+        print_color_stdin;
+    }
+}
+
+main();
+exit 0;
