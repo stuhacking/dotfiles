@@ -10,6 +10,7 @@ use Term::ANSIColor;
 
 my $verbose = 0;
 my $rule_file = $ENV{HOME} . '/.cless';
+my $sep = '\|';
 
 my %rules = ();
 
@@ -22,7 +23,8 @@ sub parse_rules ()
         {
             next if (length($_) <= 1 or index($_, '#') == 0);
 
-            my @kv = split(':',$_);
+            my @kv = split($sep,$_);
+            print STDERR "Rule: $kv[0] => $kv[1]\n" if $verbose >= 2;
             $rules{$kv[0]} = $kv[1];
         }
     }
@@ -74,7 +76,8 @@ sub main() {
         if (m/^--?verbose$/)     { $verbose++; }
         elsif (m/^-v+$/)         { $verbose += length($_)-1; }
         elsif (m/^--?r(ules)?$/) { $rule_file = shift @ARGV; }
-        else { push @log_files, $_; }
+        elsif (m/^--?d?$/)       { $sep = shift @ARGV; }
+        else                     { push @log_files, $_; }
     }
 
     parse_rules;
