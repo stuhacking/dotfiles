@@ -1,4 +1,4 @@
-#Fri Oct 18 13:29:24 BST 2013
+#Fri Oct 18 14:25:29 BST 2013
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_missing_annotations=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.indent_parameter_description=true
 @org.eclipse.ui.editors=3.7.0.v20110928-1504
@@ -37,6 +37,7 @@
 /instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.overrideannotation=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.comment.new_lines_at_block_boundaries=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.keep_else_statement_on_same_line=false
+/instance/org.eclipse.ui.editors/printMargin=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_after_opening_paren_in_parenthesized_expression=do not insert
 /configuration/org.eclipse.ui.ide/SHOW_WORKSPACE_SELECTION_DIALOG=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_for_increments=do not insert
@@ -214,6 +215,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_enum_constant=do not insert
 /instance/org.eclipse.jdt.ui/sp_cleanup.remove_private_constructors=true
 /instance/org.eclipse.jdt.ui/java_string_bold=true
+/instance/org.eclipse.ui.editors/printMarginColumn=110
 @org.eclipse.debug.core=3.7.1.v20111129-2031
 /instance/org.eclipse.jdt.ui/spelling_ignore_digits=true
 /instance/org.eclipse.jdt.ui/java_doc_keyword=130,92,66
@@ -363,6 +365,7 @@
 /instance/org.eclipse.wst.jsdt.ui/useAnnotationsPrefPage=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.brace_position_for_switch=next_line
 @org.eclipse.epp.usagedata.gathering=1.3.1.R201106061540
+/instance/org.eclipse.jdt.debug.ui/org.eclipse.jdt.debug.ui.detail_formatters=com.stuarthacking.common.geometry.Face,"(" + verts[0] + "\u0000" + verts[1] + "\u0000" + verts[2] + ")",1,com.stuarthacking.common.math.Vector3,return String.format("%f\u0000%f\u0000%f\:l\=%f"\u0000 x\u0000 y\u0000 z\u0000 getMagnitude());,1,com.stuarthacking.noise.Perlin2D,amplitude + "\\n"\n+ frequency + "\\n"\n+ octaves,1
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_new_line_before_catch_in_try_statement=insert
 /instance/org.eclipse.jdt.ui/sp_cleanup.sort_members_all=false
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_bracket_in_array_reference=do not insert
@@ -385,6 +388,7 @@
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_question_in_wildcard=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_closing_paren_in_catch=do not insert
 /instance/org.eclipse.jdt.ui/sp_cleanup.on_save_use_additional_actions=true
+/instance/org.eclipse.jdt.ui/content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.stuarthacking.common.math.shVec3"><rhs name\="com.stuarthacking.common.math.shVec3"/></lhs><lhs name\="com.stuarthacking.game.renderer.view.GLViewPort"><rhs name\="com.stuarthacking.game.renderer.view.GLViewPort"/></lhs><lhs name\="com.stuarthacking.common.RGBAColor"><rhs name\="com.stuarthacking.common.RGBAColor"/></lhs><lhs name\="java.lang.Exception"><rhs name\="org.lwjgl.LWJGLException"/><rhs name\="java.text.ParseException"/></lhs><lhs name\="java.lang.Throwable"><rhs name\="org.lwjgl.LWJGLException"/><rhs name\="java.text.ParseException"/></lhs><lhs name\="org.lwjgl.LWJGLException"><rhs name\="org.lwjgl.LWJGLException"/></lhs><lhs name\="com.stuarthacking.game.renderer.Renderable"><rhs name\="com.stuarthacking.game.renderer.RenderObject"/></lhs><lhs name\="com.stuarthacking.common.math.Vector3"><rhs name\="com.stuarthacking.common.math.Vector3"/></lhs><lhs name\="com.stuarthacking.common.math.Matrix4"><rhs name\="com.stuarthacking.common.math.Matrix4"/></lhs><lhs name\="com.stuarthacking.renderer.image.ImageFunction"><rhs name\="com.stuarthacking.renderer.image.HeightConverter"/></lhs><lhs name\="java.lang.Cloneable"><rhs name\="java.util.GregorianCalendar"/><rhs name\="java.util.Locale"/><rhs name\="java.util.Properties"/></lhs><lhs name\="java.util.Calendar"><rhs name\="java.util.GregorianCalendar"/></lhs><lhs name\="java.text.ParseException"><rhs name\="java.text.ParseException"/></lhs><lhs name\="com.stuarthacking.story.world.StoryEntity"><rhs name\="com.stuarthacking.story.world.UniqueArtifact"/></lhs><lhs name\="com.stuarthacking.story.world.Artifact"><rhs name\="com.stuarthacking.story.world.UniqueArtifact"/></lhs><lhs name\="com.stuarthacking.story.world.UniqueArtifact"><rhs name\="com.stuarthacking.story.world.UniqueArtifact"/></lhs><lhs name\="com.stuarthacking.story.printers.CharacterPrinter"><rhs name\="com.stuarthacking.story.printers.CharacterPrinter"/></lhs><lhs name\="java.lang.Enum"><rhs name\="com.stuarthacking.story.types.EventType"/></lhs><lhs name\="com.stuarthacking.story.types.EventType"><rhs name\="com.stuarthacking.story.types.EventType"/></lhs><lhs name\="com.stuarthacking.common.heightmap.HeightGenerator"><rhs name\="com.stuarthacking.common.heightmap.HeightGenerator"/></lhs><lhs name\="com.stuarthacking.common.heightmap.HeightFunction"><rhs name\="com.stuarthacking.common.heightmap.WorleyFunction"/><rhs name\="com.stuarthacking.common.heightmap.PerlinFunction"/></lhs><lhs name\="com.stuarthacking.common.noise.DistanceFunction"><rhs name\="com.stuarthacking.common.noise.EuclidianDistanceFunction"/><rhs name\="com.stuarthacking.common.noise.ManhattanDistanceFunction"/><rhs name\="com.stuarthacking.common.noise.ChebyshevDistanceFunction"/></lhs><lhs name\="com.stuarthacking.common.noise.Noise2D"><rhs name\="com.stuarthacking.common.noise.Worley2D"/></lhs><lhs name\="com.stuarthacking.common.noise.Worley2D"><rhs name\="com.stuarthacking.common.noise.Worley2D"/></lhs><lhs name\="com.stuarthacking.story.world.WorldContext"><rhs name\="com.stuarthacking.story.world.WorldContext"/></lhs><lhs name\="com.stuarthacking.common.noise.DistanceCombinator"><rhs name\="com.stuarthacking.common.noise.F1Combinator"/></lhs><lhs name\="java.util.Hashtable"><rhs name\="java.util.Properties"/></lhs><lhs name\="java.util.Map"><rhs name\="java.util.Properties"/></lhs><lhs name\="java.util.Dictionary"><rhs name\="java.util.Properties"/></lhs><lhs name\="java.util.Properties"><rhs name\="java.util.Properties"/></lhs></history>
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_binary_expression=16
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.indent_statements_compare_to_block=true
 /instance/org.eclipse.debug.ui/preferredDetailPanes=DefaultDetailPane\:DefaultDetailPane|org.eclipse.jdt.debug.ui.DETAIL_PANE_LINE_BREAKPOINT\:org.eclipse.jdt.debug.ui.DETAIL_PANE_LINE_BREAKPOINT|
@@ -396,6 +400,7 @@
 /instance/org.eclipse.jdt.ui/semanticHighlighting.interface.underline=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_new_line_before_closing_brace_in_array_initializer=do not insert
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.indent_body_declarations_compare_to_enum_declaration_header=true
+/instance/org.eclipse.debug.core/prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions>\n<expression enabled\="true" text\="getProjectionMatrix()"/>\n<expression enabled\="true" text\="getViewMatrix()"/>\n<expression enabled\="true" text\="ARBShaderObjects.glGetInfoLog(glslID, logLength)"/>\n</watchExpressions>\n
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_comma_in_allocation_expression=do not insert
 /instance/org.eclipse.jdt.ui/sp_cleanup.never_use_blocks=false
 @org.eclipse.cdt.ui=5.3.2.201202111925
@@ -427,6 +432,7 @@
 /instance/org.eclipse.mylyn.context.core/mylyn.attention.migrated=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.indent_statements_compare_to_body=true
 /instance/org.eclipse.jdt.ui/sp_cleanup.qualify_static_field_accesses_with_declaring_class=false
+/instance/org.eclipse.ui.editors/spacesForTabs=true
 /instance/org.eclipse.jdt.ui/useAnnotationsPrefPage=true
 /configuration/org.eclipse.ui.ide/RECENT_WORKSPACES_PROTOCOL=3
 /instance/org.eclipse.team.ui/org.eclipse.team.ui.first_time=false
@@ -473,7 +479,7 @@ file_export_version=3.0
 /instance/org.eclipse.jdt.ui/sp_cleanup.never_use_parentheses_in_expressions=true
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.alignment_for_superinterfaces_in_enum_declaration=16
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.insert_space_before_and_in_type_parameter=insert
-/instance/org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<launchPerspectives>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" delegate\="org.eclipse.jdt.junit.launchconfig" mode\="debug" perspective\="JUnit"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" delegate\="org.eclipse.jdt.junit.launchconfig" mode\="run" perspective\="JUnit"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" mode\="debug" perspective\="JUnit"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" mode\="run" perspective\="JUnit"/>\n</launchPerspectives>\n
+/instance/org.eclipse.debug.ui/org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<launchPerspectives>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" mode\="debug" perspective\="JTest"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" mode\="run" perspective\="JTest"/>\n<launchPerspective configurationType\="org.eclipse.pde.ui.JunitLaunchConfig" mode\="debug" perspective\="JDebug"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" delegate\="org.eclipse.jdt.junit.launchconfig" mode\="debug" perspective\="JTest"/>\n<launchPerspective configurationType\="org.eclipse.jdt.junit.launchconfig" delegate\="org.eclipse.jdt.junit.launchconfig" mode\="run" perspective\="JTest"/>\n<launchPerspective configurationType\="org.eclipse.pde.ui.JunitLaunchConfig" delegate\="org.eclipse.pde.ui.JunitLaunchConfig" mode\="debug" perspective\="JDebug"/>\n<launchPerspective configurationType\="org.eclipse.jdt.launching.localJavaApplication" delegate\="org.eclipse.jdt.launching.localJavaApplication" mode\="debug" perspective\="JDebug"/>\n<launchPerspective configurationType\="org.eclipse.jdt.launching.localJavaApplication" mode\="debug" perspective\="JDebug"/>\n</launchPerspectives>\n
 @org.eclipse.jst.jsp.core=1.2.402.v201112071853
 /instance/org.eclipse.jdt.core/org.eclipse.jdt.core.formatter.brace_position_for_enum_declaration=next_line
 /instance/org.eclipse.jdt.ui/sp_cleanup.add_missing_deprecated_annotations=true

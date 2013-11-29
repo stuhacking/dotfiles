@@ -1,1 +1,1 @@
-PATH=$PATH:/opt/eclipse
+export PATH=$PATH:/opt/eclipse
