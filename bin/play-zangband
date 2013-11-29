@@ -1,0 +1,3 @@
+#! /bin/sh
+gnome-terminal --window-with-profile=Zangband --geometry=110x30 -e zangband
+
