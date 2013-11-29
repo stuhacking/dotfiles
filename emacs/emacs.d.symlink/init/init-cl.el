@@ -22,8 +22,7 @@
     (slime-setup '(slime-fancy
                    slime-scratch
                    slime-banner
-                   slime-autodoc
-                   slime-highlight-edits))))
+                   slime-autodoc))))
 
 
 ;;; init-cl.el ends here
