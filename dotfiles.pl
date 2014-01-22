@@ -67,12 +67,12 @@ FILE_LOOP:
 
 sub uninstall () {
     print STDOUT "Uninstalling Dotfiles...\n";
-    print STDERR "TODO: Uninstaller\n";
+    print STDERR "TODO: Uninstaller.\n";
 }
 
 sub usage () {
     print STDERR "Usage: perl dotfiles.pl [un]install\n";
-    print STDERR "TODO: Uninstaller\n";
+    print STDERR "TODO: Extended Usage Message.\n";
     exit 1;
 }
 
