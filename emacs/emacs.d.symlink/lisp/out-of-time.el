@@ -1,4 +1,4 @@
-;;; out-of-time.el --- miscellaneous utilities not included in std time libraries
+;;; out-of-time.el --- miscellaneous time utilities.
 ;;; Copyright 2010(c) Stuart Hacking <stuhacking@gmail.com>.
 
 ;; Author: Stuart Hacking <stuhacking@gmail.com>
