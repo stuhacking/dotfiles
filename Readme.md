@@ -36,14 +36,15 @@ Contents
 --------
 
 Most subdirectories simply contain some basic environment setup
-like setting PATH entries. The more significant files are:
+such as setting $PATH entries. The more significant files are:
 
 1) sh/ - Global Shell Configuration
 
 2) vim/ - Vim is good.
 
-3) emacs/ - Emacs is good.
-            (Emacs site-lisp/ directory is omitted due to size. Just use ELPA now instead, it's awesome!)
+3) emacs/ - Emacs is better.
+
+Emacs configuration requires additional packages for Lisp and Clojure which can be installed using the package manager in Emacs 24. Install at least: rainbow-delimiters, paredit, cider, slime using 'M-x package-install [RET] package [RET]'
 
 4) Readme.md - This file
 
