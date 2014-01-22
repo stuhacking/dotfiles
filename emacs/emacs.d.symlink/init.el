@@ -20,33 +20,31 @@
 (load custom-file)
 
 ;; Include Additional Load Paths
-(let ((paths (list (concat my-emacsd "lisp/")
-                   (concat my-emacsd "lisp/private/")
-                   (concat my-emacsd "site-lisp/")
-                   (concat my-emacsd "site-lisp/slime/"))))
-  (mapc #'(lambda (p) (add-to-list 'load-path p)) paths))
+(dolist (path (list (concat my-emacsd "init/")
+                    (concat my-emacsd "lisp/")
+                    (concat my-emacsd "lisp/private/")
+                    (concat my-emacsd "site-lisp/")
+                    (concat my-emacsd "site-lisp/slime/")))
+  (add-to-list 'load-path path))
+
+(length load-path)
 
 ;; Load libraries
+(load-library "wordcount")
+(load-library "out-of-time")
 (load-library "window-state")           ; Zoom and restore windows in a frame.
 (global-set-key [f12] 'toggle-zoom-window)
 
-(load-library "wordcount")              ; Simple word count program.
-
-;;; Load additional initialisations:
-(let ((init-dir (concat my-emacsd "init/"))
-      ;; Each init file should take the form of (filename [(system-type ...)]
-      ;; Where the first element is the filename
-      ;;   and the second element is an optional list of systems on which to
-      ;;   load the file.
-      (init-files (list
-                   '("init-kbd")
-                   '("init-cl")
-                   '("init-org")
-                   '("init-win" (windows-nt)))))
-  (mapc #'(lambda (f) (load (concat init-dir (first f))))
-        (remove-if-not #'(lambda (x) (or (null (second x))
-                                         (member system-type (second x))))
-                       init-files)))
+;;; Load additional init files:
+(dolist (init-file '(("init-kbd")
+		     ("init-org")
+		     ("init-lisp")
+		     ("init-py")
+		     ("init-win" (windows-nt))))
+  (when (or (null (second init-file))
+            (member system-type (second init-file)))
+    (message "Loading init... " init-file)
+    (load (first init-file))))
 
 ;;; Auto Modes
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))
@@ -61,8 +59,8 @@
     (if f
         (describe-function f)
       (message "No function under cursor"))))
-;; Bind to help key.
-(global-set-key [C-f1] #'describe-function-at-point)
+;; Bind to alternate help key.
+(global-set-key [M-f1] #'describe-function-at-point)
 
 ;; Borrowed path hack from: http://stackoverflow.com/a/8609349
 (defun set-exec-path-from-shell-PATH ()
