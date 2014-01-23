@@ -2,19 +2,23 @@
 ========
 
 My Emacs Init Dir.
-Targeted at GNU Emacs running on Windows (work) and OS X (home).
+Intended for use with GNU Emacs running on Mac OSX (Home) and 
+Linux (Work). Updated for Emacs version 24.3. Using earlier Emacs 
+versions probably requires modification.
 
 Contents
 --------
 
 * init.el - primary customisations loaded at emacs startup.
-* custom.el - customer-set-variables, customer-set-faces
+* custom.el - custom-set-variables, custom-set-faces
 * init/
- * init-kbd - global key bindings
- * init-win - Windows specific utilities
- * init-cl  - Lisp customisations
- * init-haskell - haskell customisations
-* lisp
+ * init-kbd     - Global key bindings
+ * init-win     - Windows specific utilities
+ * init-lisp    - Lisp customisations
+ * init-py      - Python Customization
+ * init-haskell - Haskell customisations
+* lisp/
+ * number-to-word - Utility for converting numbers to human readable string. 
  * out-of-time - additional date utils
  * perl-helper - utilities for perl scripting
  * window-state - save and load window layouts
@@ -23,18 +27,14 @@ Contents
 Dependencies
 ------------
 
-The site-lisp/ directory is omitted due to size. The following modules should be present:
+The site-lisp/ directory was previously used for third party libraries. Now, the package manager (ELPA) will place libraries in the 'elpa/' directory. The following packages are recommended:
 
-* twittering-mode
-* typing-of-emacs
-* color-theme
-* rainbow-mode
-* slime
-* clojure-mode
-* groovy-mode
-* grails-mode
-* haskell-mode
-* rainbow-delimiters
+* rainbow-delimiters - colorise matching parens in lisp modes.
+* paredit            - auto-balance parens in lisp modes.
+* slime              - Common Lisp REPL & Debugging utilities.
+* cider              - Clojure REPL.
+* rainbow-mode       - Colorize #hex; strings in CSS and *HTML modes.
+* typing-of-emacs    - Fun speed typing game.
 
 Additional data directories org/, asave/, and backup/ are also omitted.
 
