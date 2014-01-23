@@ -34,6 +34,17 @@
 ;; sub-optimal and un-lispy in places but I will continue to clean it
 ;; up as I learn the Right Way(tm).
 
+;; The following commands are exposed:
+;;  - number-to-word-prompt: Read a number from the minibuffer
+;;                           and echo the result
+;;  - number-to-word-insert: Read a number from the minibuffer
+;;                           and insert into the buffer at point
+;;  - number-to-word-at-point: Read the word at point and echo
+;;                             the result.
+;;  - convert-number-to-word-at-point: Read the word at point
+;;                                     and replace it with the
+;;                                     converted representation.
+
 ;; Initially a number is parsed and split into groups of three,
 ;; following the English convention, thus:
 ;;    5436234 => (5 436 234)
@@ -123,7 +134,8 @@ using a special case.")
     (17 . "sexdecillion")
     (18 . "octodecillion")
     (19 . "novemdecillion")
-    (20 . "vigintillion"))
+    (20 . "vigintillion")
+    (100 . "googol"))
   "Table of scale representations.")
 
 (defun number-lookup (number)
@@ -227,6 +239,24 @@ in a string."
   (let ((num (read-from-minibuffer "Number: ")))
     (message "%s" (number-to-word-string num))))
 
+(defun number-to-word-insert ()
+  (interactive)
+  (let ((num (read-from-minibuffer "Number: ")))
+    (insert (format "%s" (number-to-word-string num)))))
+
+(defun number-to-word-at-point ()
+  (interactive)
+  (let* ((num (thing-at-point 'word)))
+    (message "%s" (number-to-word-string num))))
+
+(defun convert-number-to-word-at-point ()
+  (interactive)
+  (let* ((num (thing-at-point 'word))
+         (bounds (bounds-of-thing-at-point 'word))
+         (start (car bounds))
+         (end (cdr bounds)))
+    (delete-region start end)
+    (insert (format "%s" (number-to-word-string num)))))
 
 (provide 'number-to-word)
 ;;; number-to-word.el ends here
