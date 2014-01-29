@@ -81,7 +81,7 @@
 (eval-when-compile
   (require 'cl))
 
-(defconst *number-representations*
+(defconst *numbers*
   '((1 . "one")
     (2 . "two")
     (3 . "three")
@@ -114,149 +114,137 @@ Compound numbers are fomed by joining the multiples of 10 with
 the digits.  The values between 10 and 19 inclusive are formed
 using a special case.")
 
-(defconst *scale-representations*
-  '((1 . "thousand")
-    (2 . "million")
-    (3 . "billion")
-    (4 . "trillion")
-    (5 . "quadrillion")
-    (6 . "quintillion")
-    (7 . "sextillion")
-    (8 . "septillion")
-    (9 . "octillion")
-    (10 . "nonillion")
-    (11 . "decillion")
-    (12 . "undecillion")
-    (13 . "duodecillion")
-    (14 . "tredecillion")
-    (15 . "quattuordecillion")
-    (16 . "quindecillion")
-    (17 . "sexdecillion")
-    (18 . "octodecillion")
-    (19 . "novemdecillion")
-    (20 . "vigintillion")
-    (100 . "googol"))
-  "Table of scale representations.")
+(defconst *powers-of-ten*
+  '("" "thousand" "million" "billion" "trillion" "quadrillion" "quintillion"
+    "sextillion" "septillion" "octillion" "nonillion" "decillion" "undecillion"
+    "duodecillion" "tredecillion" "quattuordecillion" "quindecillion" "sexdecillion"
+    "octodecillion" "novemdecillion" "vigintillion")
+  "List of ascending powers of ten.")
 
 (defun number-lookup (number)
-  "Look up the textual representation of NUMBER."
-  (cdr (assoc number *number-representations*)))
+  "Look up word representation of NUMBER."
+  (cdr (assoc number *numbers*)))
 
 (defun scale-lookup (scale)
-  "Look up the textual representation of SCALE."
-  (cdr (assoc scale *scale-representations*)))
+  "Look up word representation of SCALE."
+  (nth scale *powers-of-ten*))
 
 (defun remove-null-or-empty (list)
-  "Drop any stray occurences of nil or empty string from LIST."
+  "Drop occurrences of nil or empty string from LIST."
   (remove-if #'(lambda (x)
                  (or (null x)
                      (equal x "")))
              list))
 
+(defun ensure-string (s)
+  "Cast s to string."
+  (cond ((stringp s) s)
+        ((numberp s) (number-to-string s))
+        ((symbolp s) (symbol-name s))
+        (t (error "Don't know how to create string from S"))))
+
 (defun number-append-hundred (number)
   "Append 'hundred' only when NUMBER is non-nil."
   (let ((stem (number-lookup number)))
-    (unless (null stem)
+    (when stem
       (concat stem " hundred"))))
 
-(defun 3-digit-group-to-word (num level)
+(defun digit-group-to-word (num level)
   "Convert a three digit group into text.
 Convert NUM (a three digit number) into a 'hundred group' and append
-the appropriate thousand label, determined by LEVEL."
+the appropriate power-of-ten label, determined by LEVEL."
   (let ((digit-list (loop until (= num 0)
                           collect (mod num 10)
                           do (setq num (/ num 10))))
         (num-words '()))
 
-    (unless (null (caddr digit-list))
-      (push (number-append-hundred (caddr digit-list))
+    (when (third digit-list)
+      (push (number-append-hundred (third digit-list))
             num-words))
 
-    (if (and (not (null (cadr digit-list)))
-             (= (cadr digit-list) 1))
+    (if (and (second digit-list)
+             (= (second digit-list) 1))
         ;; Number is in the range 10-19
         ;; Special case
-        (push (number-lookup (+ (car digit-list)
-                                (* 10 (cadr digit-list))))
+        (push (number-lookup (+ (first digit-list)
+                                (* 10 (second digit-list))))
               num-words)
       ;; Numbers can be joined normally
       (progn
         ;; push unit-of-ten into the number if exists.
-        (unless (null (cadr digit-list))
-          (push (number-lookup (* 10 (cadr digit-list)))
+        (when (second digit-list)
+          (push (number-lookup (* 10 (second digit-list)))
                 num-words))
         ;; push unit into the number if exists
-        (unless (null (car digit-list))
-          (push (number-lookup (car digit-list))
+        (when (first digit-list)
+          (push (number-lookup (first digit-list))
                 num-words))))
 
     ;; If we have a number and level then
     ;; add a thousand value.
-    (when (and (not (null num-words))
-               (> level 0))
+    (when num-words
       (push (scale-lookup level) num-words))
-    (mapconcat #'(lambda (x) x)
+    (mapconcat #'identity
                (reverse (remove-null-or-empty num-words))
                " ")))
 
-(defun number-to-word-string (number)
-  "Convert a number NUMBER into it's textual representation.
+(defun group-digits (number)
+  (let ((numvect (reverse (string-to-list (ensure-string number)))))
+    (loop while numvect
+       collect (concat (remove-if #'null
+                                  (list (third numvect)
+                                               (second numvect)
+                                               (first numvect)))) into groups
+         do (setq numvect (cdddr numvect))
+       finally (return (reverse groups)))))
 
+(defun digits-to-words (digit-groups)
+  (let ((exponent 0))
+    (reverse
+     (remove-null-or-empty
+      (loop for i in (reverse digit-groups)
+         collect (digit-group-to-word (string-to-number i) exponent)
+         do (incf exponent))))))
+
+(defun number-to-word (number)
+  "Convert a number NUMBER into it's textual representation.
 Currently, only whole numbers are supported.
 
 Emacs does not support bignums.  You can still pass numeric
-arguments, but if they are too large then bad things will happen.
-If you want to convert very large numbers then you can wrap them
-in a string."
-  (let* ((num (if (numberp number)
-                  (number-to-string number)
-                number))
-         (numvect (reverse (string-to-list num)))
-         (digit-list
-          (loop until (null numvect)
-                collect (concat (remove-if #'null
-                                           (list (caddr numvect)
-                                                 (cadr numvect)
-                                                 (car numvect))))
-                do (setq numvect (cdddr numvect))))
-         (counter 0)
-         (word-list-reversed
-          (remove-null-or-empty
-           (loop for i in digit-list
-                 collect (3-digit-group-to-word (string-to-number i) counter)
-                 do (setq counter (1+ counter))))))
-    (message "%s" word-list-reversed)
-    (if (null word-list-reversed)
-        "zero"
-      (mapconcat #'(lambda (x) x)
-                 (reverse word-list-reversed)
-                 ", "))))
+arguments, but they will overflow. If you want to convert large
+numbers then you can pass them as a string."
+  (let* ((digit-list (group-digits number))
+         (word-list (digits-to-words digit-list)))
+    (if word-list
+        (mapconcat #'identity word-list ", ")
+        "zero")))
 
 ;; Interactive Commands
 (defun number-to-word-prompt ()
   "Convert a number (from prompt) to an English representation."
   (interactive)
   (let ((num (read-from-minibuffer "Number: ")))
-    (message "%s" (number-to-word-string num))))
+    (message "%s" (number-to-word num))))
 
 (defun number-to-word-insert ()
   (interactive)
   (let ((num (read-from-minibuffer "Number: ")))
-    (insert (format "%s" (number-to-word-string num)))))
+    (insert (format "%s" (number-to-word num)))))
 
 (defun number-to-word-at-point ()
   (interactive)
   (let* ((num (thing-at-point 'word)))
-    (message "%s" (number-to-word-string num))))
+    (message "%s" (number-to-word num))))
 
 (defun convert-number-to-word-at-point ()
   (interactive)
   (let* ((num (thing-at-point 'word))
          (bounds (bounds-of-thing-at-point 'word))
-         (start (car bounds))
+         (start (first bounds))
          (end (cdr bounds)))
     (delete-region start end)
-    (insert (format "%s" (number-to-word-string num)))))
+    (insert (format "%s" (number-to-word num)))))
 
 (provide 'number-to-word)
 ;;; number-to-word.el ends here
+
