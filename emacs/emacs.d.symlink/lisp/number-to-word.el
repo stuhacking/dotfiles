@@ -114,6 +114,7 @@ Compound numbers are fomed by joining the multiples of 10 with
 the digits.  The values between 10 and 19 inclusive are formed
 using a special case.")
 
+
 (defconst *powers-of-ten*
   '("" "thousand" "million" "billion" "trillion" "quadrillion" "quintillion"
     "sextillion" "septillion" "octillion" "nonillion" "decillion" "undecillion"
