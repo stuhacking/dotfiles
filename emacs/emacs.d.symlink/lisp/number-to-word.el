@@ -163,6 +163,12 @@ the appropriate power-of-ten label, determined by LEVEL."
       (push (number-append-hundred (third digit-list))
             num-words))
 
+    ;; Insert and if there's any number following
+    ;; a hundred
+    (if (or (second digit-list)
+            (first digit-list))
+        (push "and" num-words))
+    
     (if (and (second digit-list)
              (= (second digit-list) 1))
         ;; Number is in the range 10-19
@@ -185,6 +191,10 @@ the appropriate power-of-ten label, determined by LEVEL."
     ;; add a thousand value.
     (when num-words
       (push (scale-lookup level) num-words))
+
+    (when (string-equal "and" (last num-words))
+      (setf num-words (butlast num-words)))
+    
     (mapconcat #'identity
                (reverse (remove-null-or-empty num-words))
                " ")))
