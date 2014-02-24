@@ -1,4 +1,12 @@
-;;; Common Options for Lisp style languages
+;;; init-lisp --- Common Options for Lisp style languages.
+
+;;; Commentary:
+
+;; This package provides customizations related to programming
+;; in Lisp dialects.  Assume that ELPA is used and load everything
+;; on a hook.
+
+;;; Code:
 
 ;; Standard Lisp Options
 (dolist (hook '(lisp-mode-hook
@@ -9,9 +17,17 @@
   (add-hook hook
             (lambda ()
               (eval-when-compile
-                (require 'rainbow-delimiters)
+                (require 'rainbow-delimiters))
+              (rainbow-delimiters-mode))))
+
+(dolist (hook '(lisp-mode-hook
+                clojure-mode-hook
+                emacs-lisp-mode-hook
+                slime-repl-mode-hook))
+  (add-hook hook
+            (lambda ()
+              (eval-when-compile
                 (require 'paredit))
-              (rainbow-delimiters-mode)
               (paredit-mode))))
 
 ;; Emacs Lisp
@@ -43,5 +59,9 @@
                                  slime-autodoc)))))))
 
 ;; Clojure & NRepl
+(dolist (hook '(cider-mode-hook
+                cider-repl-mode-hook))
+  (add-hook hook 'cider-turn-on-eldoc-mode))
 
-;;; init-lisp.el ends here.
+(provide 'init-lisp)
+;;; init-lisp.el ends here
