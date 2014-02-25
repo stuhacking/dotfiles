@@ -53,6 +53,7 @@
  '(recentf-mode t)
  '(recentf-save-file "~/.emacs.d/.recentf")
  '(require-final-newline (quote visit-save))
+ '(safe-local-variable-values (quote ((Eval visual-line-mode t) (Eval visual-line-mode))))
  '(save-place t nil (saveplace))
  '(save-place-file "~/.emacs.d/.emacs-places")
  '(scroll-bar-mode nil)
@@ -70,6 +71,7 @@
  '(vc-annotate-color-map (quote ((20 . "#990A1B") (40 . "#FF6E64") (60 . "#cb4b16") (80 . "#7B6000") (100 . "#b58900") (120 . "#DEB542") (140 . "#546E00") (160 . "#859900") (180 . "#B4C342") (200 . "#3F4D91") (220 . "#6c71c4") (240 . "#9EA0E5") (260 . "#2aa198") (280 . "#69CABF") (300 . "#00629D") (320 . "#268bd2") (340 . "#69B7F0") (360 . "#d33682"))))
  '(vc-annotate-very-old-color "#93115C")
  '(visible-bell t)
+ '(visual-line-fringe-indicators (quote (nil nil)))
  '(visual-line-mode nil t)
  '(yow-file "~/.emacs.d/yow.lines"))
 
@@ -78,7 +80,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#242424" :foreground "#f6f3e8" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "apple" :family "Monaco"))))
  '(font-lock-string-face ((t (:foreground "#2aa198" :weight bold))))
- '(org-block-background ((t (:background "#FFFFFF"))) t)
- '(org-block-end-line ((t (:inherit org-block-begin-line))) t))
+ '(org-block-background ((t (:background "#FFFFFF"))))
+ '(org-block-end-line ((t (:inherit org-block-begin-line))) t)
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "grey70"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "steelblue"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "orange"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "red"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "plum"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "darkgreen"))))
+ '(rainbow-delimiters-depth-7-face ((t (:foreground "yellow"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "plum"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "violet"))))
+ '(rainbow-delimiters-unmatched-face ((t (:background "darkred" :foreground "white")))))
 
