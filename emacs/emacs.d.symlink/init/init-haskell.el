@@ -1,7 +1,11 @@
-(load "haskell-site-file")
+;; Haskell Specific Customizations
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook
+          #'(lambda ()
+              (turn-on-haskell-doc-mode)
+              (turn-on-haskell-indentation)))
 
-(setq haskell-program-name "ghci.exe")
+(when (eq system-type 'windows-nt)
+  (setq haskell-program-name "ghci.exe"))
+
+;; init-haskell ends here.

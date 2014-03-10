@@ -5,8 +5,6 @@
  ;; If there is more than one, they won't work right.
  '(Info-mode-hook (quote (turn-on-font-lock)))
  '(auto-save-list-file-prefix "~/.emacs.d/asave/.saves-")
- '(background-color "#fdf6e3")
- '(background-mode light)
  '(backup-directory-alist (quote ((".*" . "~/.emacs.d/backup/"))))
  '(c-default-style (quote ((c-mode . "Stroustrup") (c++-mode . "Stroustrup") (java-mode . "Java") (awk-mode . "AWK"))))
  '(c-require-final-newline (quote ((c-mode . t) (c++-mode . t) (objc-mode . t) (java-mode . t))))
@@ -23,7 +21,6 @@
  '(eshell-directory-name "~/.emacs.d/.eshell/")
  '(even-window-heights nil)
  '(fci-rule-color "#073642")
- '(find-function-source-path (cons "/emacs-23.1/src/" load-path))
  '(focus-follows-mouse t)
  '(foreground-color "#657b83")
  '(fortune-always-compile nil)
@@ -31,6 +28,8 @@
  '(fortune-file "~/.emacs.d/fortunes")
  '(fringe-mode (quote (nil . 0)) nil (fringe))
  '(global-hl-line-mode nil)
+ '(haskell-mode-hook (quote (turn-on-haskell-indentation turn-on-haskell-doc-mode)) t)
+ '(haskell-stylish-on-save t)
  '(help-mode-hook (quote (variable-pitch-mode)))
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-tail-colors (quote (("#073642" . 0) ("#546E00" . 20) ("#00736F" . 30) ("#00629D" . 50) ("#7B6000" . 60) ("#8B2C02" . 70) ("#93115C" . 85) ("#073642" . 100))))
@@ -47,14 +46,15 @@
  '(mouse-avoidance-mode (quote animate) nil (avoid))
  '(nroff-mode-hook (quote (variable-pitch-mode)))
  '(ns-tool-bar-display-mode nil t)
+ '(org-agenda-files (concat user-emacs-directory ".org-agenda-files"))
+ '(org-babel-load-languages (quote ((emacs-lisp . t))))
  '(org-src-tab-acts-natively t)
- '(package-archives (quote (("gnu" . "http://elpa.gnu.org/packages/") ("marmalade" . "http://marmalade-repo.org/packages/"))))
  '(recentf-max-saved-items 30)
  '(recentf-mode t)
- '(recentf-save-file "~/.emacs.d/.recentf")
+ '(recentf-save-file (concat user-emacs-directory ".recentf"))
  '(require-final-newline (quote visit-save))
  '(save-place t nil (saveplace))
- '(save-place-file "~/.emacs.d/.emacs-places")
+ '(save-place-file (concat user-emacs-directory ".emacs-places"))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
@@ -62,7 +62,7 @@
  '(speedbar-show-unknown-files t)
  '(tab-width 4)
  '(text-mode-hook (quote (text-mode-hook-identify)))
- '(toe-highscore-file "~/.emacs.d/toe-scores")
+ '(toe-highscore-file (concat user-emacs-directory "toe-scores"))
  '(tool-bar-mode nil)
  '(tooltip-mode nil)
  '(user-full-name "Stuart Hacking")
@@ -71,7 +71,7 @@
  '(vc-annotate-very-old-color "#93115C")
  '(visible-bell t)
  '(visual-line-mode nil t)
- '(yow-file "~/.emacs.d/yow.lines"))
+ '(yow-file (concat user-emacs-directory "yow.lines")))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -79,6 +79,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-lock-string-face ((t (:foreground "#2aa198" :weight bold))))
- '(org-block-background ((t (:background "#FFFFFF"))) t)
+ '(org-block-background ((t (:background "Black"))))
+ '(org-block-begin-line ((t (:inherit org-meta-line :background "grey80" :foreground "orangered" :box (:line-width 2 :color "grey75" :style released-button)))) t)
  '(org-block-end-line ((t (:inherit org-block-begin-line))) t))
 
