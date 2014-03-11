@@ -35,7 +35,6 @@
 
 ;;; Load additional init files:
 (dolist (init-file '(("init-kbd")
-                     ("init-deb")
                      ("init-org")
                      ("init-lisp")
                      ("init-haskell")
