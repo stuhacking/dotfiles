@@ -13,7 +13,6 @@
 #
 require 5;
 use strict;
-use Switch;
 
 my $overwrite_all = 0;
 my $backup_all = 0;
@@ -41,18 +40,18 @@ FILE_LOOP:
                 my $line = <STDIN>;
                 chomp($line);
 
-                switch (substr($line,0,1)) {
-                    case "o"      { $overwrite = 1; }
-                    case "O"      { $overwrite_all = 1; }
-                    case "b"      { $backup = 1; }
-                    case "B"      { $backup_all = 1; }
-                    case "s"      { $skip = 1;}
-                    case "S"      { $skip_all = 1; }
-                    else          { 
-                        print STDERR "Unknown Option! -- $line\n"; 
-                        redo FILE_LOOP;
-                    }
-                }            
+                my $cmd = substr($line,0,1);
+
+                if    ("o" eq $cmd) { $overwrite = 1; }
+                elsif ("O" eq $cmd) { $overwrite_all = 1; }
+                elsif ("b" eq $cmd) { $backup = 1; }
+                elsif ("B" eq $cmd) { $backup_all = 1; }
+                elsif ("s" eq $cmd) { $skip = 1; }
+                elsif ("S" eq $cmd) { $skip_all = 1; }
+                else {
+                    print STDERR "Unkown Option! -- $line\n";
+                    redo FILE_LOOP;
+                }
             }
 
             `rm -fr $target` if $overwrite || $overwrite_all;
