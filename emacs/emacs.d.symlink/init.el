@@ -8,26 +8,24 @@
 
 ;;; Code:
 (require 'cl)
-(require 'package)
-(package-initialize)
 
-(setq emacs-dir (case system-type
-                  ('windows-nt "/emacs-23.3/")
-                  (t "/usr/local/share/emacs"))
-      my-emacsd "~/.emacs.d/")
+;; Enable package manager on emacs
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")))
 
-(setq custom-file (concat my-emacsd "custom.el"))
+;; Use separate customisation file
+(setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
 ;; Include Additional Load Paths
-(dolist (path (list (concat my-emacsd "init/")
-                    (concat my-emacsd "lisp/")
-                    (concat my-emacsd "lisp/private/")
-                    (concat my-emacsd "site-lisp/")
-                    (concat my-emacsd "site-lisp/slime/")))
+(dolist (path (list (concat user-emacs-directory "init/")
+                    (concat user-emacs-directory "lisp/")
+                    (concat user-emacs-directory "lisp/private/")
+                    (concat user-emacs-directory "site-lisp/")))
   (add-to-list 'load-path path))
-
-(length load-path)
 
 ;; Load libraries
 (load-library "wordcount")
@@ -37,13 +35,13 @@
 
 ;;; Load additional init files:
 (dolist (init-file '(("init-kbd")
-		     ("init-org")
-		     ("init-lisp")
-		     ("init-py")
-		     ("init-win" (windows-nt))))
+                     ("init-org")
+                     ("init-lisp")
+                     ("init-haskell")
+                     ("init-py")
+                     ("init-win" (windows-nt))))
   (when (or (null (second init-file))
             (member system-type (second init-file)))
-    (message "Loading init... " init-file)
     (load (first init-file))))
 
 ;;; Auto Modes
@@ -58,19 +56,22 @@
   (let ((f (function-called-at-point)))
     (if f
         (describe-function f)
-      (message "No function under cursor"))))
+        (message "No function under cursor"))))
 ;; Bind to alternate help key.
 (global-set-key [M-f1] #'describe-function-at-point)
 
 ;; Borrowed path hack from: http://stackoverflow.com/a/8609349
 (defun set-exec-path-from-shell-PATH ()
-  "Set up Emacs' `exec-path' and PATH environment variable to match
-that used by the user's shell.
+  "Set up Emacs' `exec-path' and PATH environment variable to
+match that used by the user's shell.
 
-This is particularly useful under Mac OSX, where GUI apps are not
-started from a shell."
+This is particularly useful under Mac OSX if not starting
+Emacs.app from a shell."
   (interactive)
-  (let ((path-from-shell (replace-regexp-in-string "[ \t\n]*$" "" (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
+  (let ((path-from-shell
+         (replace-regexp-in-string
+          "[ \t\n]*$" ""
+          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
