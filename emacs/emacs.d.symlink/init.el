@@ -16,6 +16,9 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")))
 
+;; Tidy non-shared files under .emacs.d
+(setq user-emacs-tmp-dir (concat user-emacs-directory "tmp/"))
+
 ;; Use separate customisation file
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
