@@ -1,4 +1,4 @@
-export PATH=$PATH:~/bin:$DOTFILES/bin
+export PATH=$PATH:/usr/local/bin:~/bin:$DOTFILES/bin
 
 # Emacs if possible
 which emacs &> /dev/null
