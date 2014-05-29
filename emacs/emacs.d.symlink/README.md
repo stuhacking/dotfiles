@@ -19,7 +19,7 @@ Contents
  * init-haskell - Haskell customisations
 * lisp/
  * number-to-word - Utility for converting numbers to human readable string. Simple version of
- *                  CL's format -R directive.
+                    CL's format -R directive.
  * out-of-time    - Additional date/timestamp utility functions.
  * perl-helper    - Maximise the active window in a frame, and restore previous window layout.
  * wordcount      - Obligatory, personal word count module.
