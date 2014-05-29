@@ -4,13 +4,13 @@
 My Emacs Init Dir.
 Intended for use with GNU Emacs running on Mac OSX (Home) and 
 Linux (Work). Updated for Emacs version 24.3. Using earlier Emacs 
-versions probably requires modification.
+versions will require modification.
 
 Contents
 --------
 
-* init.el - primary customisations loaded at emacs startup.
-* custom.el - custom-set-variables, custom-set-faces
+* init.el   - Primary customisations loaded at emacs startup.
+* custom.el - Custom-set-variables, custom-set-faces.
 * init/
  * init-kbd     - Global key bindings
  * init-win     - Windows specific utilities
@@ -18,23 +18,23 @@ Contents
  * init-py      - Python Customization
  * init-haskell - Haskell customisations
 * lisp/
- * number-to-word - Utility for converting numbers to human readable string. 
- * out-of-time - additional date utils
- * perl-helper - utilities for perl scripting
- * window-state - save and load window layouts
- * wordcount - the obligatory, personal word count module
+ * number-to-word - Utility for converting numbers to human readable string. Simple version of
+ *                  CL's format -R directive.
+ * out-of-time    - Additional date/timestamp utility functions.
+ * perl-helper    - Maximise the active window in a frame, and restore previous window layout.
+ * wordcount      - Obligatory, personal word count module.
 
 Dependencies
 ------------
 
 The site-lisp/ directory was previously used for third party libraries. Now, the package manager (ELPA) will place libraries in the 'elpa/' directory. The following packages are recommended:
 
-* rainbow-delimiters - colorise matching parens in lisp modes.
-* paredit            - auto-balance parens in lisp modes.
+* rainbow-delimiters - Colourise matching parens in lisp modes.
+* paredit            - Auto-balance parens in lisp modes.
 * slime              - Common Lisp REPL & Debugging utilities.
 * cider              - Clojure REPL.
-* rainbow-mode       - Colorize #hex; strings in CSS and *HTML modes.
-* typing-of-emacs    - Fun speed typing game.
+* rainbow-mode       - Colourise #hex; strings in CSS and *HTML modes.
+* typing-of-emacs    - Fun speed-typing game.
 
 Additional data directories org/, asave/, and backup/ are also omitted.
 
