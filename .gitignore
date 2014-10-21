@@ -32,3 +32,5 @@ emacs/emacs.d.symlink/url/cookies
 # Python
 *.pyc
 
+lein/lein.symlink/repl-history
+lein/lein.symlink/self-installs
