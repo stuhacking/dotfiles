@@ -19,10 +19,16 @@
 (global-set-key [f11] #'toggle-zoom-window)
 
 ;; Add Fortune Command to Help Menu.
-(define-key menu-bar-help-menu [fortune] '(menu-item "Fortune" fortune :help (describe-function #'fortune)))
-(define-key menu-bar-help-menu [non-sequitur]
-  '(menu-item "Flame me!" non-sequitur :help (describe-function #'non-sequitur)))
-(global-set-key [f12] #'fortune)
+(global-set-key [f10] #'cookie)
+
+;; Show Magit Status
+(global-set-key [f11] #'magit-status)
+
+;; Bind key to zoom active window
+(global-set-key [f12] 'toggle-zoom-window)
+
+;; Bind key to function help.
+(global-set-key [M-f1] #'describe-function-at-point)
 
 ;; Add Whitespace mode to the minor mode menu.
 (define-key mode-line-mode-menu [whitespace-mode]

@@ -17,85 +17,44 @@
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")))
 
 ;; Tidy non-shared files under .emacs.d
-(setq user-emacs-tmp-dir (concat user-emacs-directory "tmp/"))
+(defvar user-emacs-tmp-dir (concat user-emacs-directory "tmp/"))
 
 ;; Use separate customisation file
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
-;; Include Additional Load Paths
-(dolist (path (list (concat user-emacs-directory "init/")
-                    (concat user-emacs-directory "lisp/")
-                    (concat user-emacs-directory "lisp/private/")
-                    (concat user-emacs-directory "site-lisp/")))
-  (add-to-list 'load-path path))
+;; Additional Load Paths
+(add-to-list 'load-path (concat user-emacs-directory "init/"))
+(add-to-list 'load-path (concat user-emacs-directory "lisp/"))
+(add-to-list 'load-path (concat user-emacs-directory "lisp/private"))
+(add-to-list 'load-path (concat user-emacs-directory "site-lisp/"))
+
+(add-to-list 'load-path (concat user-emacs-directory "site-lisp/magit/"))
+(load "magit")
 
 ;; Load libraries
-(load-library "wordcount")
-(load-library "out-of-time")
-(load-library "window-state")           ; Zoom and restore windows in a frame.
-(global-set-key [f12] 'toggle-zoom-window)
+(load "wordcount")
+(load "out-of-time")
+(load "window-state")  ; Zoom and restore windows in a frame.
 
-;;; Load additional init files:
-(dolist (init-file '(("init-kbd")
-                     ("init-org")
-                     ("init-lisp")
-                     ("init-haskell")
-                     ("init-py")
-                     ("init-win" (windows-nt))))
-  (when (or (null (second init-file))
-            (member system-type (second init-file)))
-    (load (first init-file))))
+;; Load Settings
+(load "custom-functions")
+(load "init-deb")
+(load "init-org")
+;; (load "init-lisp")
+(load "init-haskell")
+(load "init-py")
+
+(when (equalp system-type 'windows-nt)
+  (load "init-win"))
+
+;; Load keyboard shortcuts
+(load "init-kbd")
+
+(setq cookie-file (concat user-emacs-directory "yow.lines"))
 
 ;;; Auto Modes
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))
-
-;;; Various and sundry functions
-
-;; Show XPath in modeline when in nxml mode
-(defun nxml-where ()
-  "Display the hierarchy of XML elements the point is on as a path."
-  (interactive)
-  (let ((path nil))
-    (save-excursion
-      (save-restriction
-        (widen)
-        (while (and (< (point-min) (point)) ;; Doesn't error if point is at beginning of buffer
-                    (condition-case nil
-                        (progn
-                          (nxml-backward-up-element) ; always returns nil
-                          t)
-                      (error nil)))
-          (setq path (cons (xmltok-start-tag-local-name) path)))
-        (if (called-interactively-p t)
-            (message "/%s" (mapconcat 'identity path "/"))
-            (format "/%s" (mapconcat 'identity path "/")))))))
-
-;; Command: Describe Function at Point.
-(defun describe-function-at-point ()
-  "Describe the function under the cursor"
-  (interactive)
-  (let ((f (function-called-at-point)))
-    (if f
-        (describe-function f)
-        (message "No function under cursor"))))
-;; Bind to alternate help key.
-(global-set-key [M-f1] #'describe-function-at-point)
-
-;; Borrowed path hack from: http://stackoverflow.com/a/8609349
-(defun set-exec-path-from-shell-PATH ()
-  "Set up Emacs' `exec-path' and PATH environment variable to
-match that used by the user's shell.
-
-This is particularly useful under Mac OSX if not starting
-Emacs.app from a shell."
-  (interactive)
-  (let ((path-from-shell
-         (replace-regexp-in-string
-          "[ \t\n]*$" ""
-          (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
 
 (set-exec-path-from-shell-PATH)
 
