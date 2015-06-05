@@ -59,12 +59,6 @@ if has("gui_running")
             set gfn=DejaVu\ Sans\ Mono\ 12
         endtry
     endif
-    " Use Xoria256 Theme
-    set background=dark
-    colorscheme wombat
-else
-    let xterm16_colormap='soft'
-    colorscheme xterm16
 endif
 
 " VimClojure options
