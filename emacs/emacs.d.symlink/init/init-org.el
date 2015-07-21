@@ -5,6 +5,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
+(add-hook 'org-mode-hook
+          (lambda ()
+            (visual-line-mode t)))
+
 (setq org-src-fontify-natively t)
 
 (global-set-key "\C-cl" 'org-store-link)
