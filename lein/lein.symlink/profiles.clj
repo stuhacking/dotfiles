@@ -1,5 +1,6 @@
-{:user {:plugins [[jonase/eastwood "0.1.0"]
-                  [lein-try "0.4.1"]
-                  [lein-exec "0.3.1"]
-                  [lein-script "0.0.3"]
-                  [cider/cider-nrepl "0.8.0-SNAPSHOT"]]}}
+{:user {:dependencies [[org.clojure/tools.nrepl "0.2.10"]]
+        :plugins [[cider/cider-nrepl "0.9.1-SNAPSHOT"]
+                  [jonase/eastwood "0.2.1"]
+                  [lein-try "0.4.3"]
+                  [lein-exec "0.3.5"]
+                  [lein-script "0.0.4"]]}}
