@@ -41,7 +41,7 @@
 (load "custom-functions")
 (load "init-deb")
 (load "init-org")
-;; (load "init-lisp")
+(load "init-lisp")
 (load "init-haskell")
 (load "init-py")
 
@@ -55,6 +55,11 @@
 
 ;;; Auto Modes
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.vs" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.fs" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.vert" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.frag" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.glsl" . glsl-mode))
 
 (set-exec-path-from-shell-PATH)
 
