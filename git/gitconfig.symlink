@@ -41,3 +41,7 @@
 	extendRegexp = true
 [color]
 	ui = auto
+[core]
+	fileMode = false
+	bare = false
+	ignoreCase = true
