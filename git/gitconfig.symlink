@@ -42,6 +42,8 @@
 [color]
 	ui = auto
 [core]
+	pager = less -F -X
 	fileMode = false
 	bare = false
 	ignoreCase = true
+	excludesfile = ~/.gitignore

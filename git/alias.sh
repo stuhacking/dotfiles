@@ -1,10 +1,10 @@
 # Git Aliases
 
-alias gst='git st'
+alias gs='git status'
+alias gl='git lg'
+alias gu='git pull'
+alias ga='git stage'
+alias gc='git commit'
+
 alias gdiff='git dc'
 
-alias gl='git ll --graph'
-alias glsmall='git ls --graph'
-
-alias gcl='git clone'
-alias gco='git commit'
