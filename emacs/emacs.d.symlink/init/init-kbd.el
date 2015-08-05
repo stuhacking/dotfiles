@@ -15,20 +15,17 @@
 ;; use M-l for lisp function completetion
 (global-set-key "\M-l" #'lisp-complete-symbol)
 
-;; Bind key for toggling window zoom
-(global-set-key [f11] #'toggle-zoom-window)
+(global-set-key [f5] #'revert-buffer)
 
 ;; Add Fortune Command to Help Menu.
-(global-set-key [f10] #'cookie)
+(global-set-key [f9] #'cookie)
 
 ;; Show Magit Status
-(global-set-key [f11] #'magit-status)
+(global-set-key [f10] #'magit-status)
 
 ;; Bind key to zoom active window
-(global-set-key [f12] 'toggle-zoom-window)
-
-;; Bind key to function help.
-(global-set-key [M-f1] #'describe-function-at-point)
+(global-set-key [f11] #'toggle-zoom-window)
+(global-set-key [f12] #'toggle-frame-fullscreen)
 
 ;; Add Whitespace mode to the minor mode menu.
 (define-key mode-line-mode-menu [whitespace-mode]
