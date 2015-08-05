@@ -17,6 +17,9 @@
 
 (global-set-key [f5] #'revert-buffer)
 
+;; Tetris
+(global-set-key [f8] #'tetris)
+
 ;; Add Fortune Command to Help Menu.
 (global-set-key [f9] #'cookie)
 
