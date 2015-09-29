@@ -1,6 +1,6 @@
 [user]
-	name = Stuart Hacking
-	email = stuhacking@gmail.com
+	name = shacking
+	email = stuart.hacking@oracle.com
 [alias]
     # Search
     f = "!git ls-files | grep -i"
@@ -41,6 +41,10 @@
 	extendRegexp = true
 [color]
 	ui = auto
+
+[url "git@oc-gitfusion.us.oracle.com:"]
+	insteadOf = "ogf:"
+
 [core]
 	pager = less -F -X
 	fileMode = false
