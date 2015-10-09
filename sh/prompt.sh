@@ -82,15 +82,15 @@ On_IWhite="\[\033[0;107m\]"   # White
 # Various variables you might want for your PS1 prompt instead
 Time12h="\T"
 Time12a="\@"
-PathShort="\w"
-PathFull="\W"
+PathShort="\W"
+PathFull="\w"
 NewLine="\n"
 Jobs="\j"
 
 # This PS1 snippet was adopted from code for MAC/BSD I saw from: http://allancraig.net/index.php?option=com_content&view=article&id=108:ps1-export-command-for-git&catid=45:general&Itemid=96
 # I tweaked it to work on UBUNTU 11.04 & 11.10 plus made it mo' better
 
-export PS1=$IBlack'$? $(git branch &>/dev/null;\
+export PS1=$IBlack'$(if [[ $? == 0 ]]; then echo "\[\033[0;32m\]\342\234\223"; else echo "\[\033[0;31m\]\342\234\227"; fi)\[\033[00m\]$(git branch &>/dev/null;\
 if [ $? -eq 0 ]; then \
   echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
   if [ "$?" -eq "0" ]; then \
