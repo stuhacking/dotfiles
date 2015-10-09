@@ -12,8 +12,7 @@
 ;; Enable package manager on emacs
 (when (>= emacs-major-version 24)
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-  (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
   (package-initialize))
 
 ;; Tidy non-shared files under .emacs.d
@@ -39,7 +38,7 @@
 
 ;; Load Settings
 (load "custom-functions")
-;;(load "init-deb")
+(load "init-deb")
 (load "init-org")
 ;;(load "init-lisp")
 ;;(load "init-haskell")
