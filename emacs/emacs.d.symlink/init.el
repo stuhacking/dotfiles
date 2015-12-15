@@ -38,8 +38,9 @@
 
 ;; Load Settings
 (load "custom-functions")
-(load "init-deb")
+;;(load "init-deb")
 (load "init-org")
+(load "init-helm")
 ;;(load "init-lisp")
 ;;(load "init-haskell")
 (load "init-py")
