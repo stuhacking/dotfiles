@@ -51,3 +51,5 @@
 	bare = false
 	ignoreCase = true
 	excludesfile = ~/.gitignore
+[push]
+	default = simple
