@@ -38,10 +38,12 @@
 
 ;; Load Settings
 (load "custom-functions")
-;;(load "init-deb")
-(load "init-org")
+(load "init-evil")
 (load "init-helm")
-;;(load "init-lisp")
+(load "init-deb")
+(load "init-org")
+(load "init-lisp")
+
 ;;(load "init-haskell")
 (load "init-py")
 
@@ -52,6 +54,8 @@
 (load "init-kbd")
 
 (setq cookie-file (concat user-emacs-directory "yow.lines"))
+
+(setq initial-scratch-message (cookie cookie-file))
 
 ;;; Auto Modes
 (add-to-list 'auto-mode-alist '("\\.php" . php-mode))

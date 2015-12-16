@@ -19,7 +19,14 @@
      (c++-mode . t)
      (objc-mode . t)
      (java-mode . t))))
+ '(case-fold-search nil)
  '(column-number-mode t)
+ '(company-backends
+   (quote
+    (company-bbdb company-nxml company-css company-eclim company-semantic company-xcode company-cmake company-capf
+     (company-dabbrev-code company-gtags company-etags company-keywords)
+     company-oddmuse company-files company-dabbrev)))
+ '(cursor-type (quote bar))
  '(custom-file (concat user-emacs-directory "custom.el"))
  '(debug-on-error t)
  '(diary-file (concat user-emacs-directory "diary"))
@@ -34,6 +41,7 @@
      ("JST-9" "Tokyo"))))
  '(eshell-directory-name (concat user-emacs-tmp-dir "eshell/"))
  '(even-window-heights nil)
+ '(evil-ex-search-case (quote sensitive))
  '(fci-rule-color "#073642")
  '(focus-follows-mouse t)
  '(foreground-color "#657b83")
@@ -55,11 +63,10 @@
    (quote
     (try-complete-lisp-symbol try-complete-lisp-symbol-partially try-expand-all-abbrevs try-expand-dabbrev try-expand-dabbrev-all-buffers try-expand-dabbrev-from-kill try-expand-line try-complete-file-name-partially try-complete-file-name)))
  '(indent-tabs-mode nil)
- '(indicate-buffer-boundaries (quote right))
+ '(indicate-buffer-boundaries (quote left))
  '(indicate-empty-lines t)
  '(inhibit-startup-screen t)
  '(initial-major-mode (quote fundamental-mode))
- '(initial-scratch-message nil)
  '(mailclient-place-body-on-clipboard-flag nil)
  '(minibuffer-auto-raise t)
  '(mode-require-final-newline (quote visit-save))
@@ -69,6 +76,7 @@
  '(org-agenda-files (concat user-emacs-directory "org-agenda-files"))
  '(org-babel-load-languages (quote ((emacs-lisp . t))))
  '(org-src-tab-acts-natively t)
+ '(powerline-evil-tag-style (quote visual-expanded))
  '(recentf-max-saved-items 30)
  '(recentf-mode t)
  '(recentf-save-file (concat user-emacs-tmp-dir "recentf"))
@@ -76,6 +84,7 @@
  '(safe-local-variable-values (quote ((Eval visual-line-mode t) (Eval visual-line-mode))))
  '(save-place t nil (saveplace))
  '(save-place-file (concat user-emacs-tmp-dir "emacs-places"))
+ '(savehist-mode t)
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(show-paren-style (quote mixed))
@@ -120,7 +129,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#F4FFF3" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "DejaVu Sans Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#F4FFF3" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "DejaVu Sans Mono"))))
  '(font-lock-comment-face ((t (:foreground "DarkGoldenRod" :slant italic))))
  '(font-lock-constant-face ((t (:foreground "darkblue"))))
  '(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
@@ -130,8 +139,11 @@
  '(font-lock-string-face ((t (:foreground "grey40" :weight bold))))
  '(font-lock-type-face ((t (:foreground "#C7C600"))))
  '(font-lock-variable-name-face ((t (:foreground "grey20"))))
+ '(mode-line ((t (:background "blue4" :foreground "gainsboro"))))
  '(org-block-begin-line ((t (:inherit org-meta-line :background "grey80" :foreground "orangered" :box (:line-width 2 :color "grey75" :style released-button)))) t)
  '(org-block-end-line ((t (:inherit org-block-begin-line))) t)
+ '(powerline-evil-emacs-face ((t (:inherit powerline-evil-base-face :background "violet" :foreground "yellow"))))
+ '(powerline-evil-normal-face ((t (:inherit powerline-evil-base-face :background "green" :foreground "black"))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "grey70"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "SteelBlue"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "orange"))))
