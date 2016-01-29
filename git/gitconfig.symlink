@@ -1,6 +1,6 @@
 [user]
-	name = shacking
-	email = stuart.hacking@oracle.com
+    name = shacking
+    email = stuart.hacking@oracle.com
 [alias]
     # Search
     f = "!git ls-files | grep -i"
@@ -14,6 +14,7 @@
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
     lt = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+    lgme = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --author='shacking'
 
     fl = log -u
 
@@ -35,21 +36,21 @@
 
     pso = "!git push origin `git-current-branch`"
     plo = "!git pull origin `git-current-branch`"
+    ss = status
+    pr = pull --rebase
+    cob = checkout -b
 
 [grep]
-	lineNumber = true
-	extendRegexp = true
+    lineNumber = true
+    extendRegexp = true
 [color]
-	ui = auto
-
-[url "git@oc-gitfusion.us.oracle.com:"]
-	insteadOf = "ogf:"
+    ui = auto
 
 [core]
-	pager = less -F -X
-	fileMode = false
-	bare = false
-	ignoreCase = true
-	excludesfile = ~/.gitignore
+    pager = less -F -X
+    fileMode = false
+    bare = false
+    ignoreCase = true
+    excludesfile = ~/.gitignore
 [push]
-	default = simple
+    default = simple
