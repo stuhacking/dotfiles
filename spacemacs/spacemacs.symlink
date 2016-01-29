@@ -96,9 +96,10 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(deeper-blue
+                         spacemacs-dark
                          spacemacs-light
-                         deeper-blue)
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -233,14 +234,34 @@ values."
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
-any user code here.  The exception is org related code, which should be placed
+any user code here.   exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
-  )
+  (setq-default
+   ;; Tab Preferences
+   indent-tabs-mode nil
+   tab-width 4
+   c-basic-offset 4
+   ;; Ensure files end with a line break.
+   require-final-newline t
+   ;; Fix Mode specific cursors
+   evil-visual-state-cursor 'box
+   evil-insert-state-cursor 'bar
+   evil-emacs-state-cursor 'hbar
+   ))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  ;; More varied Evil Mode Colors
+  (set-face-attribute 'spacemacs-normal-face nil :background "DarkOrange4")
+  (set-face-attribute 'spacemacs-insert-face nil :background "PaleGreen")
+  (set-face-attribute 'spacemacs-visual-face nil :background "RoyalBlue")
+  (set-face-attribute 'spacemacs-emacs-face nil :background "DeepPink")
+  ;; Use a rounded powerline separator.
+  (setq powerline-default-separator nil)
+  ;; Disable current line highlight.
+  (setq global-hl-line-mode nil)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
