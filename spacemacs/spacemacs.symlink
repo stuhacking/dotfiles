@@ -36,6 +36,8 @@ values."
      spell-checking
      syntax-checking
      version-control
+     ;; Language Layers
+     ;; c-c++
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -69,7 +71,7 @@ values."
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. (default t)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
@@ -228,7 +230,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup 'all
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -243,16 +245,21 @@ in `dotspacemacs/user-config'."
    c-basic-offset 4
    ;; Ensure files end with a line break.
    require-final-newline t
+   evil-ex-search-case 'sensitive
    ;; Fix Mode specific cursors
    evil-visual-state-cursor 'box
    evil-insert-state-cursor 'bar
    evil-emacs-state-cursor 'hbar
+   ;; Visual Error indication
+   visible-bell t
    ))
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (setq user-full-name "Stuart Hacking")
+  (setq c-offsets-alist '((innamespace . -)))
   ;; More varied Evil Mode Colors
   (set-face-attribute 'spacemacs-normal-face nil :background "DarkOrange4")
   (set-face-attribute 'spacemacs-insert-face nil :background "PaleGreen")
@@ -262,6 +269,7 @@ layers configuration. You are free to put any user code."
   (setq powerline-default-separator nil)
   ;; Disable current line highlight.
   (setq global-hl-line-mode nil)
+  (setq cookie-file "~/.yow.lines")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
