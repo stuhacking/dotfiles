@@ -11,7 +11,7 @@
 
 {
 pushd $DOTFILES/dict
- tail -n2 aspell.en.pws.symlink >> /tmp/aspell-$$
+ tail -n+2 aspell.en.pws.symlink >> /tmp/aspell-$$
  cat coder.dic >> /tmp/coder-$$
  cat /tmp/aspell-$$ /tmp/coder-$$ words | sort | uniq > /tmp/words-$$
  cat /tmp/words-$$ > words

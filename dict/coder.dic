@@ -116,7 +116,9 @@ multithreaded
 mumblage
 munge
 mutex
+namespace
 neep
+OpenGL
 overclock
 param
 perlin
@@ -164,6 +166,7 @@ todo
 twiddle
 twiddling
 unices
+uninitialized
 unix
 upvote
 username
