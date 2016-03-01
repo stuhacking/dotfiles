@@ -4,6 +4,7 @@ angband
 app
 arg
 ascii
+assignee
 auth
 autobox
 autoboxed
@@ -48,6 +49,7 @@ candygrammar
 clobber
 codewalker
 color
+Colors
 compo
 conjugate
 coords
@@ -96,6 +98,7 @@ koan
 lamer
 lerp
 lexer
+Localization
 lossage
 machoflop
 macrology

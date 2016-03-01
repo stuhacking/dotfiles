@@ -1,10 +1,11 @@
-personal_ws-1.1 en 186
+personal_ws-1.1 en 189
 alt
 amper
 angband
 app
 arg
 ascii
+assignee
 auth
 autobox
 autoboxed
@@ -49,6 +50,7 @@ candygrammar
 clobber
 codewalker
 color
+Colors
 compo
 conjugate
 coords
@@ -97,6 +99,7 @@ koan
 lamer
 lerp
 lexer
+Localization
 lossage
 machoflop
 macrology
