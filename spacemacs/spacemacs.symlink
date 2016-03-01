@@ -37,7 +37,10 @@ values."
      syntax-checking
      version-control
      ;; Language Layers
-     ;; c-c++
+     c-c++
+     clojure
+     html
+     javascript
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -98,9 +101,10 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(deeper-blue
-                         spacemacs-dark
+   dotspacemacs-themes '(solarized-light
                          spacemacs-light
+                         deeper-blue
+                         spacemacs-dark
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -245,6 +249,7 @@ in `dotspacemacs/user-config'."
    c-basic-offset 4
    ;; Ensure files end with a line break.
    require-final-newline t
+   evil-move-beyond-eol t
    evil-ex-search-case 'sensitive
    ;; Fix Mode specific cursors
    evil-visual-state-cursor 'box
@@ -259,6 +264,13 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq user-full-name "Stuart Hacking")
+  ;; Preferred Code formatting styles
+  '(c-default-style
+    (quote
+     ((c-mode . "Stroustrup")
+      (c++-mode . "Stroustrup")
+      (java-mode . "Java")
+      (awk-mode . "AWK"))))
   (setq c-offsets-alist '((innamespace . -)))
   ;; More varied Evil Mode Colors
   (set-face-attribute 'spacemacs-normal-face nil :background "DarkOrange4")
