@@ -29,8 +29,6 @@ git submodules.
     dotfiles$ git submodule init
     dotfiles$ git submodule update
 
-Also ensure that emacs packages are installed, or disable loading
-them in the emacs config.
 
 Contents
 --------
@@ -40,11 +38,9 @@ such as setting $PATH entries. The more significant files are:
 
 1) sh/ - Global Shell Configuration
 
-2) vim/ - Vim is good.
+3) spacemacs/ - Because the best editor is Emacs + Vim. spacemacs.symlink is the main user config file.
 
-3) emacs/ - Emacs is better.
-
-Emacs configuration requires additional packages for Lisp and Clojure which can be installed using the package manager in Emacs 24. Install at least: rainbow-delimiters, paredit, cider, slime using 'M-x package-install [RET] package [RET]'
+Spacemacs greatly simplifies the installation of ELPA packages.
 
 4) Readme.md - This file
 
