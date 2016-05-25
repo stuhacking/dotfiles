@@ -82,6 +82,7 @@ frobnitz
 frotz
 futex
 gensym
+GLSL
 gnarly
 gribble
 gweep
@@ -91,6 +92,7 @@ idempotent
 ifdef
 immutability
 impl
+instantiations
 jaggies
 kludge
 kluge
@@ -162,12 +164,14 @@ spiffy
 spinlock
 swizzling
 terpri
+tga
 threadpool
 threadpools
 thunk
 todo
 twiddle
 twiddling
+Typedefs
 unices
 uninitialized
 unix
