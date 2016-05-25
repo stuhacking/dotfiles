@@ -1,56 +1,59 @@
 [user]
-    name = shacking
-    email = stuart.hacking@oracle.com
+  name = Stuart Hacking
+  email = stuhacking@gmail.com
+
 [alias]
-    # Search
-    f = "!git ls-files | grep -i"
-    g = "grep --break --heading --line-number"
-    grep = grep -Ii
-    gr = grep -Ii
+  # Search
+  f = "!git ls-files | grep -i"
+  g = "grep --break --heading --line-number"
+  gr = grep -Ii
 
-    # Listing commands
-    ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
-    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-    lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
-    lt = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
-    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
-    lgme = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --author='shacking'
+  # Log commands
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+  lgme = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --author='stuart.hacking@oracle.com'
+  lgc = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Cgreen[%cn]%Creset' --abbrev-commit
 
-    fl = log -u
+  fl = log -u
 
-    # Diff commands
-    dl = "!git ll -1"
-    dlc = diff --cached HEAD^
+  ls-alias = "!git config -l | grep alias | cut -c 7-"
 
-    la = "!git config -l | grep alias | cut -c 7-"
+  s = status          # Full Status
+  ss = status -s      # Short Status
 
-    # Common shortcuts
-    br = branch
-    co = checkout
-    cl = clone
-    st = status -s
+  # Common shortcuts
+  br = branch
+  co = checkout
+  cl = clone
 
-    r = reset
-    r1 = reset HEAD^
-    rv = reset HEAD^ --hard
+  r = reset
+  r1 = reset HEAD^
+  rv = reset HEAD^ --hard
 
-    pso = "!git push origin `git-current-branch`"
-    plo = "!git pull origin `git-current-branch`"
-    ss = status
-    pr = pull --rebase
-    cob = checkout -b
+  up = fetch --prune
+  pr = pull --rebase
+  ps = push
+  cob = checkout -b
+
+  kill = stash save -u
+  yank = stash pop
+
+  # Typos
+  statsu = status
+  gl = !git lg
 
 [grep]
-    lineNumber = true
-    extendRegexp = true
+  lineNumber = true
+  extendRegexp = true
+
 [color]
-    ui = auto
+  ui = auto
 
 [core]
-    pager = less -F -X
-    fileMode = false
-    bare = false
-    ignoreCase = true
-    excludesfile = ~/.gitignore
+  pager = less -F -X
+  fileMode = false
+  ignoreCase = true
+  excludesfile = ~/.gitignore
+  whitespace = blank-at-eol,blank-at-eof,tab-in-indent
+
 [push]
-    default = simple
+  default = simple
