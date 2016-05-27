@@ -1,0 +1,19 @@
+#! /usr/bin/env sh
+
+if [ -d "$DOTFILES" ]; then
+  VIM_DIR=$DOTFILES/vim
+  AUTOLOAD_DIR=$VIM_DIR/vim.symlink/autoload
+  BUNDLE_DIR=$VIM_DIR/vim.symlink/bundle
+  TMP_DIR=$VIM_DIR/vim.symlink/tmp
+
+  # Create Vim Bundle folders
+  mkdir -p $AUTOLOAD_DIR
+  mkdir -p $BUNDLE_DIR
+  mkdir -p $TMP_DIR
+
+  # Install Pathogen
+  curl -LSso $AUTOLOAD_DIR/pathogen.vim https://tpo.pe/pathogen.vim
+else
+  echo "Error: Didn't find a DOTFILES directory in this env."
+  exit 1
+fi
