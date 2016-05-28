@@ -3,7 +3,11 @@ execute pathogen#infect()
 
 """ Appearance
 if has('gui_running')
-    set guifont=Input\ 12
+    if has('gui_macvim')
+      set guifont=Input:h16
+    else
+      set guifont=Input\ 12
+    endif
     set background=light
 else
     let g:solarized_termcolors=256
@@ -20,7 +24,6 @@ syntax enable
 set guioptions=acg
 set laststatus=2
 
-set number
 set colorcolumn=80
 
 set showcmd
