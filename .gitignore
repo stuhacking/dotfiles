@@ -29,6 +29,9 @@ emacs/emacs.d/url/cookies
 .*.swo
 .netrwhist
 
+# Ignore pathogen script
+vim/vim.symlink/autoload/pathogen.vim
+
 # Python
 *.pyc
 
