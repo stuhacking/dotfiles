@@ -30,15 +30,16 @@ values."
      git
      markdown
      org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      spell-checking
      syntax-checking
      version-control
      ;; Language Layers
      c-c++
      clojure
+     common-lisp
      html
      javascript
      )
@@ -110,8 +111,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("DejaVu Sans Mono"
-                               :size 14
+   dotspacemacs-default-font '("Input"
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -149,6 +150,9 @@ values."
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
    dotspacemacs-auto-resume-layouts nil
+   ;; Buffer file size (in MB), above which spacemacs will prompt to open the
+   ;; buffer literally to improve performance. (default 1)
+   dotspacemacs-large-file-size 1
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -255,6 +259,8 @@ in `dotspacemacs/user-config'."
    evil-visual-state-cursor 'box
    evil-insert-state-cursor 'bar
    evil-emacs-state-cursor 'hbar
+   ;; Show line wrapping in visual mode
+   visual-line-fringe-indicators '(nil right-curly-arrow)
    ;; Visual Error indication
    visible-bell t
    ))
@@ -265,24 +271,53 @@ This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq user-full-name "Stuart Hacking")
   ;; Preferred Code formatting styles
-  '(c-default-style
-    (quote
-     ((c-mode . "Stroustrup")
-      (c++-mode . "Stroustrup")
-      (java-mode . "Java")
-      (awk-mode . "AWK"))))
+  (setq c-default-style
+        '((c-mode . "Stroustrup")
+          (c++-mode . "Stroustrup")
+          (java-mode . "Java")))
   (setq c-offsets-alist '((innamespace . -)))
+  ;; Common Lisp Binary by platform
+  (cond ((eq system-type 'gnu/linux) (setq inferior-lisp-program "sbcl"))
+        ((eq system-type 'darwin) (setq inferior-lisp-program "ccl"))
+        (t "clisp"))
+  ;; Org-Babel Languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+     (clojure . t)
+     (gnuplot . t)
+     (java . t)
+     (perl . t)
+     (python . t)
+     (shell . t)))
+  ;; Web Mode
+  (setq web-mode-markup-indent-offset 2)
   ;; More varied Evil Mode Colors
-  (set-face-attribute 'spacemacs-normal-face nil :background "DarkOrange4")
-  (set-face-attribute 'spacemacs-insert-face nil :background "PaleGreen")
-  (set-face-attribute 'spacemacs-visual-face nil :background "RoyalBlue")
+  (set-face-attribute 'spacemacs-normal-face nil :background "ForestGreen")
+  (set-face-attribute 'spacemacs-insert-face nil :background "Red" :foreground "White")
+  (set-face-attribute 'spacemacs-visual-face nil :background "DodgerBlue" :foreground "DarkBlue")
   (set-face-attribute 'spacemacs-emacs-face nil :background "DeepPink")
   ;; Use a rounded powerline separator.
   (setq powerline-default-separator nil)
   ;; Disable current line highlight.
   (setq global-hl-line-mode nil)
   (setq cookie-file "~/.yow.lines")
+  ;; Turn on Visual Lines for text modes
+  (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
