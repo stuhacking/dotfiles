@@ -9,37 +9,43 @@
   gr = grep -Ii
 
   # Log commands
-  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
-  lgme = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --author='stuart.hacking@oracle.com'
-  lgc = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Cgreen[%cn]%Creset' --abbrev-commit
+  log-base = log --color --abbrev-commit --decorate
+  ld = !git log-base --pretty=format:'%C(red)%h %C(yellow)%ad%d%C(reset) %s %C(bold blue)<%an>%C(reset)' --date=short
+  ls = !git log-base --pretty=format:'%C(red)%h%C(reset)%C(yellow)%d%C(reset) %s %C(green)(%cr)%C(bold blue)<%an>%C(reset)'
+  lg = !git ls --graph
+  lm = !git lg --author=\"`git config user.email`\"
+  lc = !git log-base --pretty=format:'%C(red)%h%C(reset)%C(yellow)%d%C(reset) %s %C(green)(%cr)%C(bold blue)<%an>%C(green)[%cn]%C(reset)'
 
   fl = log -u
 
-  ls-alias = "!git config -l | grep alias | cut -c 7-"
+  s = status                 # Full status
+  ss = status -s             # Short status
 
-  s = status          # Full Status
-  ss = status -s      # Short Status
-
-  # Common shortcuts
   br = branch
-  co = checkout
+  brr = branch -r            # Only remote
+  bra = branch -a            # All branches
+  has = branch -a --contains # Check which branches contain <commit-ish>
+
   cl = clone
+  co = checkout
+  cob = checkout -b          # Checkout new branch
 
-  r = reset
-  r1 = reset HEAD^
-  rv = reset HEAD^ --hard
+  r = reset                  # Unstage staged changes
+  rv = reset HEAD^ --soft    # Undo last commit, bring changes into staging area
+  rh = reset HEAD^ --hard    # Undo last commit, drop changes completely
 
-  up = fetch --prune
+  up = fetch --prune         # Update
   pr = pull --rebase
   ps = push
-  cob = checkout -b
+ 
+  ci = commit
+  cp = cherry-pick
 
-  kill = stash save -u
-  yank = stash pop
+  sk = stash save -u         # Save all local changes to stash (stash kill)
+  sy = stash pop             # Retrieve last stash (stash yank)
 
-  # Typos
-  statsu = status
-  gl = !git lg
+  ls-alias = "!git config -l | grep alias | cut -c 7-"
+  ls-conflict = !git ls-files --unmerged | cut -f 2 | uniq | xargs grep -Hn '<<<<'
 
 [grep]
   lineNumber = true
@@ -49,11 +55,41 @@
   ui = auto
 
 [core]
-  pager = less -F -X
+  pager = less -F -X          # Don't block if output fits on screen.
   fileMode = false
   ignoreCase = true
   excludesfile = ~/.gitignore
   whitespace = blank-at-eol,blank-at-eof,tab-in-indent
+  editor = gvim -f
 
 [push]
   default = simple
+
+[rerere]
+  enabled = true
+
+[merge]
+  keepBackup = false;
+  tool = p4merge
+
+[mergetool]
+  prompt = false
+
+[mergetool "p4merge"]
+  cmd = /home/shacking/app/P4V/bin/p4merge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+  keepTemporaries = false
+  trustExitCode = false
+  keepBackup = false
+
+[diff]
+  tool = p4merge
+  renameLimit = 999999
+
+[difftool]
+  prompt = false
+
+[difftool "p4merge"]
+  cmd = /home/shacking/app/P4V/bin/p4merge "$LOCAL" "$REMOTE"
+  keepTemporaries = false
+  trustExitCode = false
+  keepBackup = false
