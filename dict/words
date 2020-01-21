@@ -1,3 +1,13 @@
+Clojure
+Colors
+GLSL
+Localization
+Multi
+OpenGL
+SDL
+Sokoban
+Typedefs
+UI
 alt
 amper
 angband
@@ -48,10 +58,8 @@ breedle
 burble
 candygrammar
 clobber
-Clojure
 codewalker
 color
-Colors
 compo
 conjugate
 coords
@@ -87,7 +95,6 @@ fullscreen
 futex
 gensym
 glsl
-GLSL
 gnarly
 gribble
 gweep
@@ -105,7 +112,6 @@ koan
 lamer
 lerp
 lexer
-Localization
 lossage
 machoflop
 macrology
@@ -122,7 +128,6 @@ metaprogramming
 metasyntactic
 moria
 mult
-Multi
 multisite
 multithreaded
 mumblage
@@ -131,7 +136,6 @@ mutex
 namespace
 nano
 neep
-OpenGL
 overclock
 param
 parseable
@@ -162,7 +166,6 @@ schroedinbug
 scrog
 scrool
 scrozzle
-SDL
 segfault
 serverside
 servlet
@@ -172,7 +175,6 @@ shebang
 singlethreaded
 slerp
 snarf
-Sokoban
 spiffy
 spinlock
 swizzling
@@ -187,8 +189,6 @@ toroidal
 twiddle
 twiddling
 typeahead
-Typedefs
-UI
 undrawn
 unices
 uninitialized
