@@ -1,5 +1,4 @@
-;;;; Emacs Init File.
-
+;;;; Emacs Init File                                        -*- emacs-lisp -*-
 (defconst emacs-start-time (current-time))
 
 
@@ -63,11 +62,16 @@
 
 
 ;;; Org-mode Customization.
-(setq org-default-notes-file "~/.emacs.d/notes.org")
+(global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+
+(setq org-default-notes-file "~/.emacs.d/notes.org")
 (setq org-capture-templates
       '(("n" "Note" entry (file+headline "~/.emacs.d/notes.org" "Notes")
-         "* %U %?\n\n %i\n %a")))
+         "* %U %?\n\n %i\n %a")
+        ("v" "Vacation" entry (file+headline "~/.emacs.d/calendar.org" "Vacation")
+         "** %? (,)\n   %t--%t")))
+
 
 ;;; SLIME Customization.
 (load (expand-file-name "~/dev/system/lisp/ql/slime-helper.el"))
@@ -120,15 +124,17 @@
  '(c-doc-comment-style
    (quote
     ((c-mode . javadoc)
-     (java-mode . javadoc)
-     (pike-mode . autodoc))))
+     (c++-mode . javadoc)
+     (java-mode . javadoc))))
+ '(column-number-indicator-zero-based nil)
  '(column-number-mode t)
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(exec-path
    (quote
     ("~/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10_14" "/Applications/Emacs.app/Contents/MacOS/libexec-x86_64-10_14" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin" "/Library/TeX/texbin" nil)))
+ '(fill-column 72)
  '(fringe-mode (quote (nil . 0)) nil (fringe))
  '(global-visual-line-mode t)
  '(indent-tabs-mode nil)
@@ -141,7 +147,10 @@
       ("\"-B\"" "\"-d\"" "\"english\"" "\"--dict-dir\"" "\"/Library/Application Support/cocoAspell/aspell6-en-6.0.0\"")
       "~tex" iso-8859-1))))
  '(ispell-program-name "aspell")
- '(org-agenda-files (quote ("~/dev/gamedev/crpg/plan.org")))
+ '(mouse-avoidance-mode (quote animate) nil (avoid))
+ '(org-agenda-files
+   (quote
+    ("~/.emacs.d/calendar.org" "~/dev/gamedev/crpg/plan.org")))
  '(org-babel-load-languages
    (quote
     ((lisp . t)
@@ -155,11 +164,12 @@
  '(org-directory "~/.emacs.d/orgfiles/")
  '(org-html-doctype "html5")
  '(org-log-done (quote time))
+ '(org-pretty-entities nil)
  '(org-src-tab-acts-natively t)
  '(org-startup-folded (quote content))
  '(package-selected-packages
    (quote
-    (paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode solarized-theme)))
+    (powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode solarized-theme)))
  '(projectile-tags-backend (quote auto))
  '(projectile-tags-command "ctags-exuberant -Re -f \"%s\" %s \"%s\"")
  '(require-final-newline t)
@@ -179,5 +189,7 @@
  '(show-paren-match ((t (:weight bold)))))
 (custom-theme-set-faces
  'solarized-dark
+ '(fringe ((t (:background "DarkSlateGrey" :foreground "93a1a1"))))
  '(show-paren-match ((t (:weight bold :inverse-video t))))
- '(font-lock-doc-face ((t (:inherit font-lock-comment-face)))))
+ '(org-block ((t (:background "#002930"))))
+ '(font-lock-doc-face ((t (:foreground nil :inherit font-lock-comment-face)))))

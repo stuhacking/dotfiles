@@ -7,21 +7,22 @@ alias reload-x='sh /etc/X11/Xsession.d/45x11-custom-xrandr'
 if [ "$(uname)" == "Darwin" ]
 then
 	# Good start - thanks Apple.
-	alias ls='ls -G -h'
+	alias lsc='ls -G -h'
 else
-	alias ls='ls --color=auto -h'
+	alias lsc='ls --color=auto -h'
 fi
 
-alias ll='ls -l'
-alias la='ls -a'
-alias lf='ls -F'
+alias ll='lsc -l'
+alias la='lsc -a'
+alias lf='lsc -F'
 
-alias lla='ls -la'
-alias llf='ls -lF'
-alias laf='ls -lFa'
+alias lla='lsc -la'
+alias llf='lsc -lF'
+alias laf='lsc -lFa'
 
-alias grep='grep --color=auto -n'
-alias xgrep='xargs grep --color=auto -n'
+alias cgrep='grep --color=auto'
+alias ggrep='cgrep -Hn'
+alias xgrep='xargs ggrep'
 
 alias whereami='echo $HOSTNAME'
 
