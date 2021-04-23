@@ -32,9 +32,9 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
-if [ -f ~/.profile ]; then
-    source ~/.profile
-fi
+#if [ -f ~/.profile ]; then
+#    source ~/.profile
+#fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -106,7 +106,7 @@ fi
 export DOTFILES=$HOME/dev/system/dotfiles
 
 # source all shell settings in dotfiles project.
-for config_file in `ls $DOTFILES/**/*.sh`
+for config_file in `ls $DOTFILES/**/alias.sh $DOTFILES/**/env.sh $DOTFILES/**/prompt.sh`
 do
   source $config_file
 done

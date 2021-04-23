@@ -1,26 +1,28 @@
-#! /usr/bin/env perl
-# This script will print a java log with colourized stack traces.
-# Colors can be specified in the rules file, default ~/.jless
-# Format 'match str:color specifier'
-#
+#!/usr/bin/env perl
+# This script will print the contents of a log file
+# or piped command with colorized lines. Colors can be specified in the
+# rules file, default ~/.color
+# Format: <regex>|ansi color
+# e.g.
+#  ERROR|red
+#  WARN|yellow
+#  INFO|blue
+#  DEBUG|gray
 require 5;
 use strict;
 use warnings;
 use Term::ANSIColor;
 
 my $verbose = 0;
-my $rule_file = $ENV{HOME} . '/.cless';
+my $rule_file = $ENV{HOME} . '/.colorize';
 my $sep = '\|';
 
 my %rules = ();
 
-sub parse_rules ()
-{
-    if (-e $rule_file)
-    {
+sub parse_rules () {
+    if (-e $rule_file) {
         open(RULES, '<', $rule_file) or die "Cannot open $rule_file.\n";
-        while (<RULES>)
-        {
+        while (<RULES>) {
             next if (length($_) <= 1 or index($_, '#') == 0);
 
             my @kv = split($sep,$_);
@@ -30,17 +32,13 @@ sub parse_rules ()
     }
 }
 
-sub print_color_log ($)
-{
+sub print_color_log ($) {
     my ($file) = @_;
 
     open(LOG, '<', $file);
-    while (<LOG>)
-    {
+    while (<LOG>) {
         my $color = 'reset';
-        while (my ($key, $value) = each(%rules))
-        {
-            #$color = $value if (-1 != index($_, $key));
+        while (my ($key, $value) = each(%rules)) {
             $color = $value if ($_ =~ m/$key/);
         }
 
@@ -50,14 +48,10 @@ sub print_color_log ($)
     }
 }
 
-sub print_color_stdin ()
-{
-    while (<STDIN>)
-    {
+sub print_color_stdin () {
+    while (<STDIN>) {
         my $color = 'reset';
-        while (my ($key, $value) = each(%rules))
-        {
-            #$color = $value if (-1 != index($_, $key));
+        while (my ($key, $value) = each(%rules)) {
             $color = $value if ($_ =~ m/$key/);
         }
 
@@ -66,30 +60,25 @@ sub print_color_stdin ()
         print STDOUT color 'reset';
     }
 }
+
 sub main() {
-
     my @log_files = ();
 
-    while ($#ARGV >= 0)
-    {
+    while ($#ARGV >= 0) {
         $_ = shift @ARGV;
         if (m/^--?verbose$/)     { $verbose++; }
         elsif (m/^-v+$/)         { $verbose += length($_)-1; }
         elsif (m/^--?r(ules)?$/) { $rule_file = shift @ARGV; }
-        elsif (m/^--?d?$/)       { $sep = shift @ARGV; }
+        elsif (m/^--?d(elim)?$/) { $sep = shift @ARGV; }
         else                     { push @log_files, $_; }
     }
 
     parse_rules;
-    if (@log_files)
-    {
-        foreach (@log_files)
-        {
+    if (@log_files) {
+        foreach (@log_files) {
             print_color_log ($_);
         }
-    }
-    else
-    {
+    } else {
         print_color_stdin;
     }
 }

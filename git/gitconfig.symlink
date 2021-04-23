@@ -1,6 +1,6 @@
 [user]
   name = Stuart Hacking
-  email = stuhacking@gmail.com
+	email = stuart.hacking@wandisco.com
 
 [alias]
   # Search
@@ -60,7 +60,7 @@
   ignoreCase = true
   excludesfile = ~/.gitignore
   whitespace = blank-at-eol,blank-at-eof,tab-in-indent
-  editor = gvim -f
+	editor = emacsclient --alternate-editor=''
 
 [push]
   default = simple
@@ -93,3 +93,5 @@
   keepTemporaries = false
   trustExitCode = false
   keepBackup = false
+[commit]
+	template = /home/smh/dev/alm/env/alm-dev/env-setup/wandisco-commit.template

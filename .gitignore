@@ -16,11 +16,18 @@
 *.eld
 
 # Specific sub directories to ignore
-emacs/emacs.d/elpa
-emacs/emacs.d/site-lisp
-emacs/emacs.d/tmp
-emacs/emacs.d/session.*
-emacs/emacs.d/url/cookies
+emacs/emacs.d.symlink/bookmarks
+emacs/emacs.d.symlink/url/cookies
+emacs/emacs.d.symlink/elpa
+emacs/emacs.d.symlink/games
+emacs/emacs.d.symlink/ido.last
+emacs/emacs.d.symlink/kkcrc
+emacs/emacs.d.symlink/org-roam*
+emacs/emacs.d.symlink/racket-mode
+emacs/emacs.d.symlink/session.*
+emacs/emacs.d.symlink/site-lisp
+emacs/emacs.d.symlink/tmp
+emacs/emacs.d.symlink/transient
 
 # Vim
 
