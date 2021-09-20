@@ -46,13 +46,16 @@
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(org-agenda-files '("~/.emacs.d/calendar.org" "~/dev/gamedev/crpg/plan.org"))
+ '(org-babel-clojure-backend 'cider)
  '(org-babel-load-languages
    '((lisp . t)
      (emacs-lisp . t)
      (js . t)
      (C . t)
      (perl . t)
-     (shell . t)))
+     (shell . t)
+     (python . t)
+     (clojure . t)))
  '(org-confirm-babel-evaluate t)
  '(org-default-notes-file "~/.emacs.d/notes")
  '(org-directory "~/.emacs.d/orgfiles/")
@@ -87,4 +90,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(show-paren-mismatch ((t (:background "#dc322f" :foreground "#FFFBF0" :box (:line-width 2 :color "#FFFBF0" :style released-button) :weight ultra-bold)))))

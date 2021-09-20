@@ -55,15 +55,17 @@
 ;; Theme Package:
 (use-package doom-themes
   :config
-  (setq doom-themes-enable-bold t
+  (setq active-theme 'doom-solarized-light
+        doom-themes-enable-bold t
         doom-themes-enable-italic t)
 
-  (load-theme 'doom-one t)
+  (load-theme active-theme t)
 
   (custom-theme-set-faces
-   'doom-one
+   active-theme
    '(show-paren-match ((t (:weight bold :inverse-video t))))
-   '(font-lock-doc-face ((t (:foreground nil :inherit font-lock-comment-face)))))
+   '(font-lock-doc-face ((t (:foreground nil
+                             :inherit font-lock-comment-face)))))
 
   ;; This seems to work better than modifying the default face when using
   ;; themes.
@@ -79,7 +81,7 @@
   :bind (("<f7>" . darkroom-tentative-mode)))
 
 (use-package git-gutter
-  :init (global-git-gutter-mode +1)
+  :init (global-git-gutter-mode +1))
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -97,6 +99,11 @@
 
 ;; Alternate binding for completion (I like tab behaviour to be 'always-indent).
 (global-set-key (kbd "<C-tab>") 'complete)
+(global-set-key (kbd "M-#") 'goto-line)
+
+(global-set-key (kbd "C-/") 'isearch-forward)
+(global-set-key (kbd "C-?") 'isearch-forward-regexp)
+(global-set-key (kbd "C-*") 'highlight-symbol-at-point)
 
 ;;; Org-mode Customization:
 (global-set-key (kbd "C-c a") 'org-agenda)
