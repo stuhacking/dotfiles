@@ -4,6 +4,7 @@ angband
 app
 approver
 arg
+artifactory
 ascii
 assignee
 auth
@@ -86,6 +87,7 @@ frotz
 fullscreen
 futex
 gensym
+gerrit
 glsl
 GLSL
 gnarly
@@ -199,6 +201,7 @@ util
 validator
 validators
 vert
+wandisco
 wannabee
 warez
 webhook

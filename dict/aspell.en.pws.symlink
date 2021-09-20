@@ -1,10 +1,11 @@
-personal_ws-1.1 en 214
+personal_ws-1.1 en 217
 alt
 amper
 angband
 app
 approver
 arg
+artifactory
 ascii
 assignee
 auth
@@ -87,6 +88,7 @@ frotz
 fullscreen
 futex
 gensym
+gerrit
 glsl
 GLSL
 gnarly
@@ -200,6 +202,7 @@ util
 validator
 validators
 vert
+wandisco
 wannabee
 warez
 webhook
