@@ -1,4 +1,4 @@
-;;; wordcount.el --- Simple document statistics for Emacs.
+;;; wordcount.el --- Simple word counting for Emacs.
 ;;; Copyright (C) 2007 - 2010 Stuart Hacking <stuhacking@gmail.com>.
 
 ;; Author:   Stuart Hacking <stuhacking@gmail.com>
@@ -10,14 +10,12 @@
 
 ;;; Commentary:
 
-;; It's a pain that currently the only way to do simple things like
-;; wordcounting rely on external programs like `wc'. This package
-;; fixes that by providing some simple procedures for counting the
-;; most common metrics in a document: Words, characters, paragraphs
-;; and lines.
+;; Emacs Lisp wordcount library that doesn't rely on external programs like
+;; `wc'. Provides some simple procedures for counting the most common metrics in
+;; a document: Words, characters, paragraphs and lines.
 
-;; Call `wordcount-display-statistics' to get a rundown of the current
-;; buffer statistics in a snazzy popup window.
+;; Call `wordcount-display-statistics' to get a summary of the current buffer
+;; statistics in a popup window.
 
 ;;; History:
 
@@ -60,8 +58,7 @@ acceptable."
       (setq count (1+ count)))
     count))
 
-;; Having all these spurious defuns doesn't feel very lispy
-;; TODO: come up with a way to remove this duplication
+
 (defun wordcount-count-chars-region (beginning end)
   "Count chars in region specified by BEGINNING and END."
   (interactive "r")
@@ -110,7 +107,7 @@ Displays useful set of statistics in a new popup buffer."
          (sentences (count-function-region (point-min) (point-max) #'forward-sentence))
          (ave-sentence-len (/ words sentences)))
     (save-excursion
-      (pop-to-buffer "*Document Statistics*" t)
+      (pop-to-buffer "*wordcount*" t)
       (progn
         (delete-region (point-min) (point-max))
         (insert "Statistics\n==========")

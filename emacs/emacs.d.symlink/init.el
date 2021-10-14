@@ -55,7 +55,7 @@
 ;; Theme Package:
 (use-package doom-themes
   :config
-  (setq active-theme 'doom-solarized-light
+  (setq active-theme 'doom-city-lights
         doom-themes-enable-bold t
         doom-themes-enable-italic t)
 
@@ -80,12 +80,62 @@
 (use-package darkroom
   :bind (("<f7>" . darkroom-tentative-mode)))
 
+(use-package diminish
+  :ensure t
+  :config
+  (diminish 'abbrev-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'column-enforce-mode))
+
+;; Enable spell checking
+(use-package flyspell
+  :config
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
+  (diminish 'flyspell-mode "Ⓢ")
+  (diminish 'flyspell-prog-mode "ⓢ"))
+
 (use-package git-gutter
   :init (global-git-gutter-mode +1))
 
 (use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  :ensure t
+  :hook (prog-mode . rainbow-delimiters-mode)
+  :config
+  (diminish 'rainbow-delimiters-mode))
 
+(use-package rainbow-mode
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-mode)
+  (diminish 'rainbow-mode))
+
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
+  (diminish 'paredit-mode "☯"))
+
+(use-package clojure-mode
+  :ensure t
+  :config
+  (define-clojure-indent
+    (returning 1)
+    (testing-dynamic 1)
+    (testing-print 1))
+  (add-hook 'clojure-mode-hook #'paredit-mode))
+
+(use-package cider
+  :ensure t
+  :config
+  (setq nrepl-log-messages t))
+
+(use-package yaml-mode
+  :ensure t)
 
 (add-hook 'prog-mode-hook
 	  (lambda ()

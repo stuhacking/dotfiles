@@ -23,10 +23,12 @@
  '(custom-file "~/.emacs.d/lisp/settings.el")
  '(custom-safe-themes
    '("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default))
+ '(default-input-method "japanese")
  '(exec-path
    '("~/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10_14" "/Applications/Emacs.app/Contents/MacOS/libexec-x86_64-10_14" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin" "/Library/TeX/texbin" nil))
  '(fill-column 80)
  '(fringe-mode '(nil . 0) nil (fringe))
+ '(global-hl-line-mode nil)
  '(global-visual-line-mode t)
  '(indent-tabs-mode nil)
  '(indicate-buffer-boundaries 'left)
@@ -57,7 +59,7 @@
      (python . t)
      (clojure . t)))
  '(org-confirm-babel-evaluate t)
- '(org-default-notes-file "~/.emacs.d/notes")
+ '(org-default-notes-file "~/.emacs.d/notes" t)
  '(org-directory "~/.emacs.d/orgfiles/")
  '(org-html-doctype "html5")
  '(org-log-done 'time)
@@ -66,7 +68,7 @@
  '(org-src-tab-acts-natively t)
  '(org-startup-folded 'content)
  '(package-selected-packages
-   '(git-gutter markdown-mode go-mode doom-themes org-roam racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode solarized-theme))
+   '(yaml-mode git-gutter markdown-mode go-mode doom-themes org-roam racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode solarized-theme))
  '(projectile-tags-backend 'auto)
  '(projectile-tags-command "ctags-exuberant -Re -f \"%s\" %s \"%s\"")
  '(python-shell-interpreter "python2")
