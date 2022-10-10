@@ -5,9 +5,10 @@ then
     alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 fi
 
-alias e='emacsclient -t'
-alias em='emacsclient -c'
-alias ec='emacsclient'
+export ALTERNATE_EDITOR=""
+
+alias e='emacsclient -c -a emacs'
+alias et='emacsclient -t'
 
 alias vi='emacsclient -t'
 alias vim='emacsclient -t'

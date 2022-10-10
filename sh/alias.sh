@@ -20,6 +20,8 @@ alias lla='lsc -la'
 alias llf='lsc -lF'
 alias laf='lsc -lFa'
 
+alias ff='find . -type f'
+
 alias cgrep='grep --color=auto'
 alias ggrep='cgrep -Hn'
 alias xgrep='xargs ggrep'
