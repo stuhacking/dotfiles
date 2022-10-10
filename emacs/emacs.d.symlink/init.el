@@ -1,10 +1,8 @@
-;;;; Emacs Init File                                        -*- emacs-lisp -*-
+;;;; Emacs Init File
 (defconst emacs-start-time (current-time))
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+;; Added by Package.el.  This must come before configurations of installed
+;; packages.  Don't delete this line.
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 ;;; Startup:
@@ -24,17 +22,25 @@
                    gc-cons-percentage 0.1)
              (garbage-collect)) t)
 
+;; Hack for proper focus behaviour on closing a client.
+(defadvice server-switch-buffer (around test activate)
+  (when (ad-get-arg 0)
+    ad-do-it))
 
-;;; Functions:
+;; Functions:
 (eval-and-compile
   (defun user-path (path)
     (expand-file-name path "~"))
 
   (defun emacs-path (path)
-    (expand-file-name path user-emacs-directory)))
+    (expand-file-name path user-emacs-directory))
+
+  (defun find-init ()
+    (interactive)
+    (find-file (emacs-path "init.el"))))
 
 
-;;; Environment:
+;; Environment:
 (eval-and-compile
   (setq load-path
         (append (delete-dups load-path)
@@ -46,16 +52,16 @@
   (load (emacs-path "lisp/settings")))
 
 
-;;; Global IDO Search/Open.
+;; Global IDO Search/Open.
 (setq ido-create-new-buffer 'always)
 (setq ido-enable-flex-matching t)
 (setq ido-everywhere t)
 (ido-mode 1)
 
-;; Theme Package:
+;; Appearance:
 (use-package doom-themes
   :config
-  (setq active-theme 'doom-city-lights
+  (setq active-theme 'doom-one
         doom-themes-enable-bold t
         doom-themes-enable-italic t)
 
@@ -73,12 +79,62 @@
                       :family "Iosevka"
                       :height 110))
 
+
+;;; Org-mode Customization:
+
+(use-package org
+  :ensure nil
+  :config
+  (setq org-directory (emacs-path "org/")
+        org-html-doctype "html5"
+        org-log-done 'time
+        org-pretty-entities nil
+        org-src-tab-acts-natively t
+        org-startup-folded 'content)
+
+  ;; Org-Babel
+  (setq org-babel-clojure-backend 'cider
+        org-confirm-babel-evaluate t)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((lisp . t)
+     (emacs-lisp . t)
+     (js . t)
+     (C . t)
+     (perl . t)
+     (shell . t)
+     (python . t)
+     (clojure . t))))
+
+(use-package org-agenda
+  :ensure nil
+  :after org
+  :bind ("C-c a" . org-agenda))
+
+(use-package org-capture
+  :ensure nil
+  :after org
+  :bind ("C-c c" . org-capture)
+  :config
+  (setq org-default-notes-file (emacs-path "org/notes.org")
+        org-default-tasks-file (emacs-path "org/tasks.org"))
+  ;; Capture templates
+  (setq org-capture-templates
+        `(("n" "Note"
+           entry
+           (file+headline ,org-default-notes-file "Notes")
+           ;; template
+           "* %U %?\n\n %i\n %a"))))
+
+
 ;; Programming modes standard preferences:
 (use-package magit
-  :bind (("<f12>" . magit-status)))
+  :ensure t
+  :bind (("M-g s" . magit-status)))
 
 (use-package darkroom
-  :bind (("<f7>" . darkroom-tentative-mode)))
+  :bind (("<f12>" . darkroom-tentative-mode)))
 
 (use-package diminish
   :ensure t
@@ -89,14 +145,20 @@
 
 ;; Enable spell checking
 (use-package flyspell
+  :hook ((text-mode-hook . flyspell-mode)
+         (prog-mode-hook . flyspell-prog-mode))
   :config
-  (add-hook 'text-mode-hook #'flyspell-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode)
   (diminish 'flyspell-mode "Ⓢ")
   (diminish 'flyspell-prog-mode "ⓢ"))
 
 (use-package git-gutter
-  :init (global-git-gutter-mode +1))
+  :init (global-git-gutter-mode +1)
+  :config
+  (diminish 'git-gutter-mode "△"))
+
+(use-package ws-butler
+  :ensure t
+  :hook (prog-mode . ws-butler-mode))
 
 (use-package rainbow-delimiters
   :ensure t
@@ -106,19 +168,20 @@
 
 (use-package rainbow-mode
   :ensure t
+  :hook prog-mode
   :config
-  (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
 
 (use-package paredit
   :ensure t
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (lisp-interaction-mode . paredit-mode)
+         (ielm-mode . paredit-mode)
+         (lisp-mode . paredit-mode)
+         (eval-expression-minibuffer-setup . paredit-mode)
+         (clojure-mode . paredit-mode))
   :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
-  (add-hook 'ielm-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
-  (diminish 'paredit-mode "☯"))
+  (diminish 'paredit-mode "♎"))
 
 (use-package clojure-mode
   :ensure t
@@ -126,8 +189,7 @@
   (define-clojure-indent
     (returning 1)
     (testing-dynamic 1)
-    (testing-print 1))
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+    (testing-print 1)))
 
 (use-package cider
   :ensure t
@@ -155,16 +217,6 @@
 (global-set-key (kbd "C-?") 'isearch-forward-regexp)
 (global-set-key (kbd "C-*") 'highlight-symbol-at-point)
 
-;;; Org-mode Customization:
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
-
-(setq org-default-notes-file "~/.emacs.d/notes.org")
-(setq org-capture-templates
-      '(("n" "Note" entry (file+headline "~/.emacs.d/notes.org" "Notes")
-         "* %U %?\n\n %i\n %a")
-        ("v" "Vacation" entry (file+headline "~/.emacs.d/calendar.org" "Vacation")
-         "** %? (,)\n   %t--%t")))
 
 
 ;;; SLIME Customization:
