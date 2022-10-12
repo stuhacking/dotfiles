@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: org-src-block
+# key: <s
+# --
+
+#+BEGIN_SRC ${1:Language}
+$0
+#+END_SRC

@@ -117,7 +117,7 @@
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
  '(package-selected-packages
-   '(org-capture ws-butler restclient yaml-mode git-gutter markdown-mode go-mode doom-themes racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode))
+   '(yasnippet org-capture ws-butler restclient yaml-mode git-gutter markdown-mode go-mode doom-themes racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode))
  '(projectile-tags-backend 'auto)
  '(projectile-tags-command "ctags-exuberant -Re -f \"%s\" %s \"%s\"")
  '(python-shell-interpreter "python2")

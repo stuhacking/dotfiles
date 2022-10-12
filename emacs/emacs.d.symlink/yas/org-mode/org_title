@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: org-title
+# key: <t
+# --
+
+#+TITLE:  ${1:Title}
+#+AUTHOR: Stu
+#+EMAIL:  stuart.hacking@wandisco.com
+#+DATE:   `(format-time-string "[%Y-%m-%d %H:%M]")`
+
+$0

@@ -107,6 +107,11 @@
      (python . t)
      (clojure . t))))
 
+(use-package org-bullets
+  :ensure t
+  :after org
+  :hook (org-mode . org-bullets-mode))
+
 (use-package org-agenda
   :ensure nil
   :after org
@@ -125,7 +130,42 @@
            entry
            (file+headline ,org-default-notes-file "Notes")
            ;; template
-           "* %U %?\n\n %i\n %a"))))
+           "* %U %?\n\n %i\n %a")
+
+          ;; General task not linked to any project.
+          ("t" "Task"
+           entry
+           (file+headline ,org-default-tasks-file "Tasks")
+
+           "** TODO %^{Title}\n\n  Source: %a\n\n  %?")
+
+          ;; Find the plan.org file for a projectile context and insert an
+          ;; issue. (Assumes there's an 'Issues' section.)
+          ("i" "Issue"
+           entry
+           (file+headline (lambda ()
+                            (car (projectile-expand-paths '("plan.org")))) "Issues")
+
+           "** TODO %^{Title}\n   Source: %a\n\n   %?")
+
+          ;; Journal entry
+          ("j" "Journal"
+           entry
+           (file+datetree ,(emacs-path "org/journal.org"))
+           "* $?")))
+
+  (setq org-capture-templates-contexts
+        '(("i" ((lambda () (and (projectile-mode)
+                                (projectile-project-p))))))))
+
+
+
+(use-package yasnippet
+  :ensure t
+  :hook ((text-mode prog-mode org-mode) . yas-minor-mode-on)
+  :config
+  (setq yas-snippet-dirs (list (emacs-path "yas/")))
+  (yas-reload-all))
 
 
 ;; Programming modes standard preferences:
