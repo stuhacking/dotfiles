@@ -22,6 +22,9 @@ emacs/emacs.d.symlink/elpa
 emacs/emacs.d.symlink/games
 emacs/emacs.d.symlink/ido.last
 emacs/emacs.d.symlink/kkcrc
+emacs/emacs.d.symlink/org/agenda
+emacs/emacs.d.symlink/org/tasks.org
+emacs/emacs.d.symlink/org/journal.org
 emacs/emacs.d.symlink/org-roam*
 emacs/emacs.d.symlink/racket-mode
 emacs/emacs.d.symlink/session.*

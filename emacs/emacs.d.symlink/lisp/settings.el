@@ -94,7 +94,7 @@
    '("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default))
  '(default-input-method "japanese")
  '(exec-path
-   '("~/bin" "~/.npm/node_modules/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/opt/node/bin" nil))
+   '("~/bin" "~/.npm/node_modules/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/opt/bin" "/opt/node/bin" nil))
  '(fill-column 80)
  '(fringe-mode '(nil . 0) nil (fringe))
  '(global-hl-line-mode nil)
@@ -116,8 +116,10 @@
  '(ispell-program-name "aspell")
  '(menu-bar-mode nil)
  '(mouse-avoidance-mode 'animate nil (avoid))
+ '(org-agenda-files
+   '("~/dev/system/dotfiles/emacs/emacs.d.symlink/org/tasks.org"))
  '(package-selected-packages
-   '(yasnippet org-capture ws-butler restclient yaml-mode git-gutter markdown-mode go-mode doom-themes racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode))
+   '(gnuplot gnuplot-mode solarized-theme yasnippet org-capture ws-butler restclient yaml-mode git-gutter markdown-mode go-mode doom-themes racket-mode auctex delight diminish use-package powerline c-eldoc org-bullets darkroom paredit column-enforce-mode rust-mode rustic cider htmlize clang-format rainbow-mode rainbow-delimiters magit projectile-speedbar projectile glsl-mode))
  '(projectile-tags-backend 'auto)
  '(projectile-tags-command "ctags-exuberant -Re -f \"%s\" %s \"%s\"")
  '(python-shell-interpreter "python2")

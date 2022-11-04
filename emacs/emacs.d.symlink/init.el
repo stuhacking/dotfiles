@@ -60,21 +60,18 @@
 
 ;; Appearance:
 (use-package doom-themes
-  :config
-  (setq active-theme 'doom-one
-        doom-themes-enable-bold t
-        doom-themes-enable-italic t)
+  :ensure t
+  :init
+  (setq active-theme 'doom-solarized-light)
 
   (load-theme active-theme t)
 
   (custom-theme-set-faces
    active-theme
-   '(show-paren-match ((t (:weight bold :inverse-video t))))
+   '(show-paren-match ((t (:weight bold))))
    '(font-lock-doc-face ((t (:foreground nil
-                             :inherit font-lock-comment-face)))))
+                                         :inherit font-lock-comment-face)))))
 
-  ;; This seems to work better than modifying the default face when using
-  ;; themes.
   (set-face-attribute 'default nil
                       :family "Iosevka"
                       :height 110))
@@ -107,15 +104,12 @@
      (python . t)
      (clojure . t))))
 
-(use-package org-bullets
-  :ensure t
-  :after org
-  :hook (org-mode . org-bullets-mode))
-
 (use-package org-agenda
   :ensure nil
   :after org
-  :bind ("C-c a" . org-agenda))
+  :bind ("C-c a" . org-agenda)
+  :config
+  (setq org-agenda-files (emacs-path "org/agenda")))
 
 (use-package org-capture
   :ensure nil
@@ -152,12 +146,11 @@
           ("j" "Journal"
            entry
            (file+datetree ,(emacs-path "org/journal.org"))
-           "* $?")))
+           "* %?")))
 
   (setq org-capture-templates-contexts
         '(("i" ((lambda () (and (projectile-mode)
                                 (projectile-project-p))))))))
-
 
 
 (use-package yasnippet
